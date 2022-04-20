@@ -148,7 +148,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="charSelect.cpp" />
     <ClCompile Include="sfml-template.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="charSelect.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

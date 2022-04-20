@@ -1,7 +1,9 @@
 ﻿#include <SFML/Graphics.hpp>
+#include <iostream>
 #include <random>
 #include <sstream>
 #include <SFML/Audio.hpp>
+#include "charSelect.h"
 
 using namespace sf;
 using namespace std;
@@ -46,16 +48,16 @@ int main()
 
     Text textMessage;
     textMessage.setFont(fontKOMIKAP);
-    textMessage.setString("Press Enter to start!");
+    textMessage.setString("Choose your Character!");
     textMessage.setFillColor(Color::White);
-    textMessage.setCharacterSize(75);
+    textMessage.setCharacterSize(105);
 
     FloatRect textRect = textMessage.getLocalBounds();
     textMessage.setOrigin(
         textRect.left + textRect.width * 0.5f,
         textRect.top + textRect.height * 0.5f
     );
-    textMessage.setPosition(1920 * 0.5f, 1080 * 0.5f);
+    textMessage.setPosition(1920 * 0.5f, 200);
 
     Text textScore;
     textScore.setFont(fontKOMIKAP);
@@ -107,41 +109,8 @@ int main()
     // The player starts on the left
     side playerSide = side::LEFT;
 
-    // Prepare the gravestone
-    Texture textureRIP;
-    textureRIP.loadFromFile("graphics/rip.png");
-    Sprite spriteRIP;
-    spriteRIP.setTexture(textureRIP);
-    spriteRIP.setPosition(600, 860);
 
-    // Prepare the axe
-    Texture textureAxe;
-    textureAxe.loadFromFile("graphics/axe.png");
-    Sprite spriteAxe;
-    spriteAxe.setTexture(textureAxe);
-    spriteAxe.setPosition(700, 830);
-
-    // Prepare the flying log
-    Texture textureLog;
-    textureLog.loadFromFile("graphics/log.png");
-    Sprite spriteLog;
-    spriteLog.setTexture(textureLog);
-    spriteLog.setPosition(810, 720);
-
-    SoundBuffer chopBuffer;
-    chopBuffer.loadFromFile("sound/chop.wav");
-    Sound chop;
-    chop.setBuffer(chopBuffer);
-
-    SoundBuffer deathBuffer;
-    deathBuffer.loadFromFile("sound/death.wav");
-    Sound death;
-    death.setBuffer(deathBuffer);
-
-    SoundBuffer ootBuffer;
-    ootBuffer.loadFromFile("sound/out_of_time.wav");
-    Sound oot;
-    oot.setBuffer(ootBuffer);
+    charSelect chooseChar(window.getSize().x, window.getSize().y);
 
     float logSpeedX = 1000;
     float logSpeedY = -1500;
@@ -180,6 +149,38 @@ int main()
     timerBar.setPosition(timerPos);
     timerBar.setFillColor(Color::Red);
 
+
+    Sprite spritePlayer1;
+    spritePlayer1.setTexture(texturePlayer);
+    FloatRect characterRect1 = spritePlayer1.getLocalBounds();
+    spritePlayer1.setOrigin(
+        characterRect1.left + characterRect1.width * 0.5f,
+        characterRect1.top + characterRect1.height * 0.5f
+    );
+    spritePlayer1.setPosition(Vector2f(1920 * 0.5f - 250, 1080 * 0.5f));
+
+    Texture texturePlayer2;
+    texturePlayer2.loadFromFile("graphics/player2.png");
+    Sprite spritePlayer2;
+    spritePlayer2.setTexture(texturePlayer2);
+    FloatRect characterRect2 = spritePlayer2.getLocalBounds();
+    spritePlayer2.setOrigin(
+        characterRect2.left + characterRect2.width * 0.5f,
+        characterRect2.top + characterRect2.height * 0.5f
+    );
+    spritePlayer2.setPosition(Vector2f(1920 * 0.5f, 1080 * 0.5f));
+
+    Texture texturePlayer3;
+    texturePlayer3.loadFromFile("graphics/player3.png");
+    Sprite spritePlayer3;
+    spritePlayer3.setTexture(texturePlayer3);
+    FloatRect characterRect3 = spritePlayer3.getLocalBounds();
+    spritePlayer3.setOrigin(
+        characterRect3.left + characterRect3.width * 0.5f,
+        characterRect3.top + characterRect3.height * 0.5f
+    );
+    spritePlayer3.setPosition(Vector2f(1920 * 0.5f + 250, 1080 * 0.5f));
+
     Clock clock;
     const float timeMax = 6.0f;
     float timeRemaining = timeMax;
@@ -188,6 +189,7 @@ int main()
     bool acceptInput = false;
     bool beeActive = false;
     bool isPause = true;
+    bool isSelect = false;
 
     int score = 0;
     //입력처리
@@ -210,270 +212,48 @@ int main()
                     break;
                 case Keyboard::Return:
                 {
-                    isPause = false;
-
-                    score = 0;
-                    timeRemaining = timeMax;
-                    acceptInput = true;
-
-                    for (int i = 0; i < countBranches; ++i)
+                    switch (chooseChar.GetPressedItem())
                     {
-                        sideBranches[i] = side::NONE;
+                    case 0:
+                        std::cout << "Character 1 has been chosen." << std::endl;
+                        break;
+                    case 1:
+                        std::cout << "Character 2 has been chosen." << std::endl;
+                        break;
+                    case 2:
+                        std::cout << "Character 3 has been chosen." << std::endl;
+                        break;
                     }
-                    spriteRIP.setPosition(675, 2000);
-                    spritePlayer.setPosition(580, 720);
                 }
                 break;
                 case Keyboard::Left:
-                    if (acceptInput && !isPause)
-                    {
-                        chop.play();
-                        playerSide = side::LEFT;
-                        ++score;
-                        timeRemaining += (2 / score) + 0.15f; // 스코어가 커지면 커질수록 시간을 작게 주려고
-                        if (timeRemaining > timeMax)
-                        {
-                            timeRemaining = timeMax;
-                        }
-                        spriteAxe.setPosition(AXE_POSITION_LEFT, spriteAxe.getPosition().y);
-                        spritePlayer.setPosition(580, 720);
-
-                        UpdateBranches(sideBranches, countBranches, gen);
-                        spriteLog.setPosition(810, 720);
-                        logSpeedX = 5000;
-                        logActive = true;
-                        acceptInput = false;
-                    }
+                    chooseChar.MoveLeft();
                     break;
+
                 case Keyboard::Right:
-                    if (acceptInput && !isPause)
-                    {
-                        chop.play();
-                        playerSide = side::RIGHT;
-                        ++score;
-                        timeRemaining += (2 / score) + 0.15f; // 스코어가 커지면 커질수록 시간을 작게 주려고
-                        if (timeRemaining > timeMax)
-                        {
-                            timeRemaining = timeMax;
-                        }
-                        spriteAxe.setPosition(AXE_POSITION_RIGHT, spriteAxe.getPosition().y);
-                        spritePlayer.setPosition(1200, 720);
+                    chooseChar.MoveRight();
+                    break;
 
-                        UpdateBranches(sideBranches, countBranches, gen);
-                        spriteLog.setPosition(810, 720);
-                        logSpeedX = -5000;
-                        logActive = true;
-                        acceptInput = false;
-                    }
-                    break;
-                default:
-                    break;
                 }
-                break;
-            case Event::KeyReleased:
-                if (event.key.code == Keyboard::Left || event.key.code == Keyboard::Right)
-                {
-                    if (!isPause)
-                    {
-                        acceptInput = true;
-                        spriteAxe.setPosition(2000, spriteAxe.getPosition().y);
-                    }
-                }
-                break;
-            default:
-                break;
             }
         }
 
 
         //업데이트
 
-        if (!isPause)
-        {
-            if (!beeActive) //벌그리기
-            {
-                //벌 초기화
-                beeSpeed = gen() % 200 + 200;
-                beeSpeed *= -1.f;
-                float y = gen() % 500 + 500;
-                spriteBee.setPosition(2000, y);
-                beeActive = true;
-            }
-            else
-            {
-                //벌이동, 화면밖으로 나갔는지 테스트
-                float deltaX = beeSpeed * dt.asSeconds();
-                Vector2f currPos = spriteBee.getPosition();
-                currPos.x += deltaX;
-                spriteBee.setPosition(currPos);
-
-                if (currPos.x < -100)
-                {
-                    beeActive = false;
-                }
-
-            }
-            if (!cloud1Active)
-            {
-                cloud1Speed = gen() % 200 + 10;
-                cloud1Speed *= -1.f;
-                float y = gen() % 1 + 10;
-                spriteCloud1.setPosition(2000, y);
-                cloud1Active = true;
-            }
-            else
-            {
-                float deltaX = cloud1Speed * dt.asSeconds();
-                Vector2f currPos = spriteCloud1.getPosition();
-                currPos.x += deltaX;
-                spriteCloud1.setPosition(currPos);
-
-                if (currPos.x < -500)
-                {
-                    cloud1Active = false;
-                }
-            }
-            if (!cloud2Active)
-            {
-                cloud2Speed = gen() % 200 + 30;
-                float y = gen() % 150 + 50;
-                spriteCloud2.setPosition(-500, y);
-                cloud2Active = true;
-            }
-            else
-            {
-                float deltaX = cloud2Speed * dt.asSeconds();
-                Vector2f currPos = spriteCloud2.getPosition();
-                currPos.x += deltaX;
-                spriteCloud2.setPosition(currPos);
-
-                if (currPos.x > 1980)
-                {
-                    cloud2Active = false;
-                }
-            }
-            if (!cloud3Active)
-            {
-                cloud3Speed = gen() % 200 + 10;
-                cloud3Speed *= -1.f;
-                float y = gen() % 300 + 50;
-                spriteCloud3.setPosition(2000, y);
-                cloud3Active = true;
-            }
-            else
-            {
-                float deltaX = cloud3Speed * dt.asSeconds();
-                Vector2f currPos = spriteCloud3.getPosition();
-                currPos.x += deltaX;
-                spriteCloud3.setPosition(currPos);
-
-                if (currPos.x < -500)
-                {
-                    cloud3Active = false;
-                }
-            }
-
-            for (int i = 0; i < countBranches; i++)
-            {
-                float height = 150 * i;
-                switch (sideBranches[i])
-                {
-                case side::LEFT:
-                    spriteBranches[i].setPosition(610, height);
-                    spriteBranches[i].setRotation(180);
-                    break;
-                case side::RIGHT:
-                    spriteBranches[i].setPosition(1330, height);
-                    spriteBranches[i].setRotation(0);
-                    break;
-                default:
-                    spriteBranches[i].setPosition(-2000, -2000);
-                    break;
-                }
-            }
-
-            stringstream ss;
-            ss << "Score = " << score;
-            textScore.setString(ss.str());
-
-            timeRemaining -= dt.asSeconds();
-            timerBarSize.x = timeRemaining * timerBarWidthPerSecond;
-            timerBar.setSize(timerBarSize);
-
-            if (timeRemaining < 0.f)
-            {
-                timerBarSize.x = 0.f;
-                timerBar.setSize(timerBarSize);
-
-                isPause = true;
-                textMessage.setString("Out Of Time!!");
-                FloatRect textRect = textMessage.getLocalBounds();
-                textMessage.setOrigin(
-                    textRect.left + textRect.width * 0.5f,
-                    textRect.top + textRect.height * 0.5f
-                );
-                oot.play();
-            }
-
-            if (logActive)
-            {
-                Vector2f logPos = spriteLog.getPosition();
-                logPos.x += logSpeedX * dt.asSeconds();
-                logPos.y += logSpeedY * dt.asSeconds();
-                spriteLog.setPosition(logPos);
-
-                if (logPos.x < -100 || logPos.x > 2000)
-                {
-                    logActive = false;
-                    spriteLog.setPosition(810, 720);
-                }
-            }
-
-            if (sideBranches[countBranches - 1] == playerSide)
-            {
-                isPause = true;
-                acceptInput = false;
-                spritePlayer.setPosition(2000, 660);
-                spriteRIP.setPosition(525, 700);
-
-                textMessage.setString("SQUISHED!");
-                FloatRect textRect = textMessage.getLocalBounds();
-                textMessage.setOrigin(
-                    textRect.left + textRect.width * 0.5f,
-                    textRect.top + textRect.height * 0.5f);
-
-                death.play();
-            }
-
-        }
 
 
         //그리기
 
         window.clear();
         window.draw(spriteBackground);
-        window.draw(spriteCloud1);
-        window.draw(spriteCloud2);
-        window.draw(spriteCloud3);
-        window.draw(spriteTree);
-        window.draw(spriteLog);
-        for (int i = 0; i < countBranches; i++)
-        {
-            window.draw(spriteBranches[i]);
-        }
+
         //ui는 나중에찍어주새
-        window.draw(spritePlayer);
-        window.draw(spriteAxe);
-        window.draw(spriteRIP);
-        window.draw(spriteBee);
-
-
-        window.draw(textScore);
-        if (isPause)
-        {
-            window.draw(textMessage);
-        }
-        window.draw(timerBar);
+        chooseChar.draw(window);
+        window.draw(spritePlayer1);
+        window.draw(spritePlayer2);
+        window.draw(spritePlayer3);
+        window.draw(textMessage);
         window.display();
 
 

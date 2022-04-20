@@ -18,5 +18,13 @@
     <ClCompile Include="sfml-template.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="charSelect.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="charSelect.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
