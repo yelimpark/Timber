@@ -9,5 +9,5 @@ Scene::Scene(SceneType s_type, sf::RenderWindow* window)
 }
 
 Scene::~Scene()
-{
+{  
 }
