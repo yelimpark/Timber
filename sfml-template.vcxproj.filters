@@ -13,30 +13,10 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="소스 파일\GameObj">
-      <UniqueIdentifier>{ed01637f-fb1a-4c50-b929-0be1a5c4fc55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Framework">
-      <UniqueIdentifier>{eba88016-1095-4df8-ad06-774efa2aea30}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sfml-template.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ImageObj.cpp">
-      <Filter>소스 파일\GameObj</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ImageObj.h">
-      <Filter>소스 파일\GameObj</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>소스 파일\Framework</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
