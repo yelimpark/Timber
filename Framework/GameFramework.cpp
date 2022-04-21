@@ -44,9 +44,7 @@ bool GameFramework::Run()
 
 		sceneManager->Update(dt.asSeconds());
 
-		window->clear();
 		sceneManager->render(window);
-		window->display();
 	}
 
     return 0;
