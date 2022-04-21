@@ -14,12 +14,12 @@ void LowDynamicObj::init(sf::Texture& texture)
     active = false;
 }
 
-void LowDynamicObj::Update(float dt, std::mt19937& gen)
+void LowDynamicObj::Update(float dt, std::mt19937& gen, float defHeight)
 {
     if (!active)
     {
         speed = (-1) * gen() % 200 + 200;
-        float y = gen() % 500 + 500;
+        float y = gen() % 400 + defHeight;
         sprite.setPosition(2000, y);
         active = true;
     }
@@ -27,7 +27,7 @@ void LowDynamicObj::Update(float dt, std::mt19937& gen)
     {
         float deltaX = speed * dt;
         sf::Vector2f currPos = sprite.getPosition();
-        currPos.x += deltaX;
+        currPos.x -= deltaX;
         sprite.setPosition(currPos);
 
         if (currPos.x < -200)

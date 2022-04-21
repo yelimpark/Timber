@@ -150,10 +150,10 @@ void StageScene::Update(float dt)
     if (!isPause)
     {
 
-        bee.Update(dt, gen);
+        bee.Update(dt, gen, 500);
 
         for (int i = 0; i < clouds_size; i++) {
-            clouds[i].Update(dt, gen);
+            clouds[i].Update(dt, gen, 0);
         }
 
         timeBar.Update(dt);

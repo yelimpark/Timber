@@ -17,7 +17,7 @@ public:
 
 	void init(sf::Texture& texture);
 
-	void Update(float dt, std::mt19937& gen);
+	void Update(float dt, std::mt19937& gen, float defHeight);
 
 	void render(sf::RenderWindow* window);
 

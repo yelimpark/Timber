@@ -26,11 +26,13 @@ void FlyingLog::HanddleInput(sf::Keyboard::Key key)
 		logSpeedX = 5000;
 		logActive = true;
 		break;
+
 	case Keyboard::Right:
 		spriteLog.setPosition(810, 720);
 		logSpeedX = -5000;
 		logActive = true;
 		break;
+
 	default:
 		break;
 	}
