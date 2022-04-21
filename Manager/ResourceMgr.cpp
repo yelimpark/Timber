@@ -10,7 +10,9 @@ void ResourceMgr::Init()
 	loaded.push_back(new Resource("MAINCLOUDTEX", "graphics/cloud.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("MAINTREETEX", "graphics/tree.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("MAINBRANCHTEX", "graphics/branch.png", ResourceTypes::Texture));
-	loaded.push_back(new Resource("MAINPLAYERTEX", "graphics/player.png", ResourceTypes::Texture));
+	loaded.push_back(new Resource("MAINPLAYERTEX1", "graphics/player1.png", ResourceTypes::Texture));
+	loaded.push_back(new Resource("MAINPLAYERTEX2", "graphics/player2.png", ResourceTypes::Texture));
+	loaded.push_back(new Resource("MAINPLAYERTEX3", "graphics/player3.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("MAINRIPTEX", "graphics/rip.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("MAINAXETEX", "graphics/axe.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("MAINLOGTEX", "graphics/log.png", ResourceTypes::Texture));

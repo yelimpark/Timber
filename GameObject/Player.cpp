@@ -1,5 +1,8 @@
 #include "Player.h"
 #include "../Manager/ResourceMgr.h"
+#include <sstream>
+
+using namespace std;
 
 Player::Player()
 	:p_side(side::LEFT)
@@ -12,9 +15,11 @@ side Player::getSide()
 	return p_side;
 }
 
-void Player::init()
+void Player::init(int playerTextureInex)
 {
-	spritePlayer.setTexture(*ResourceMgr::instance()->GetTexture("MAINPLAYERTEX"));
+	stringstream ss;
+	ss << "MAINPLAYERTEX" << playerTextureInex + 1;
+	spritePlayer.setTexture(*ResourceMgr::instance()->GetTexture(ss.str()));
 	spritePlayer.setPosition(580, 720);
 	p_side = side::LEFT;
 

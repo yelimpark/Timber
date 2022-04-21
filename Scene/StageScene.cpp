@@ -16,7 +16,7 @@ bool StageScene::Init()
     random_device rd;
     mt19937 gen(rd());
 
-    player.init();
+    player.init(sceneManager.GetGameVariables().selectedCharaIndex);
 
     for (int i = 0; i < clouds_size; i++) {
         clouds[i].init(*ResourceMgr::instance()->GetTexture("MAINCLOUDTEX"));
@@ -215,7 +215,6 @@ void StageScene::Update(float dt)
 
 void StageScene::render(sf::RenderWindow* window)
 {
-        window->clear();
         window->draw(spriteBackground);
         for (int i = 0; i < clouds_size; i++) {
             clouds[i].render(window);
@@ -239,7 +238,6 @@ void StageScene::render(sf::RenderWindow* window)
         {
             window->draw(textMessage);
         }
-        window->display();
 
 }
 

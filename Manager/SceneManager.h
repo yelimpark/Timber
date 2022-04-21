@@ -1,8 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "GameVariables.h"
 
 enum class SceneType {
-	STAGE, MAX
+	CHARA,
+	STAGE, 
+	MAX
 };
 
 class Scene;
@@ -13,7 +16,11 @@ private:
 
 	Scene* scenes[(int)SceneType::MAX];
 
+	GameVariables gameVal;
+
 public:
+	GameVariables& GetGameVariables();
+
 	SceneManager(SceneType s_type);
 
 	void Init();

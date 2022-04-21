@@ -11,7 +11,7 @@ GameFramework::GameFramework()
 {
     VideoMode vm(1920, 1080);
 	window = new RenderWindow(vm, "Timber!", Style::Default);
-    sceneManager = new SceneManager(SceneType::STAGE);
+    sceneManager = new SceneManager(SceneType::CHARA);
 }
 
 bool GameFramework::Init()
@@ -44,7 +44,9 @@ bool GameFramework::Run()
 
 		sceneManager->Update(dt.asSeconds());
 
+		window->clear();
 		sceneManager->render(window);
+		window->display();
 	}
 
     return 0;

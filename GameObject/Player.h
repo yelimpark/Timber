@@ -26,7 +26,7 @@ public:
 
     side getSide();
 
-    void init();
+    void init(int playerTextureInex);
 
     void HanddleInput(sf::Keyboard::Key key);
 

@@ -1,5 +1,11 @@
 #include "SceneManager.h"
 #include "../Scene/StageScene.h"
+#include "../Scene/CharaSelectScene.h"
+
+GameVariables& SceneManager::GetGameVariables()
+{
+	return gameVal;
+}
 
 SceneManager::SceneManager(SceneType s_type)
 	:s_type(s_type)
@@ -8,12 +14,10 @@ SceneManager::SceneManager(SceneType s_type)
 
 void SceneManager::Init()
 {
+	scenes[(int)SceneType::CHARA] = new CharaSelectScene(*this);
 	scenes[(int)SceneType::STAGE] = new StageScene(*this);
 
-	for (int i = 0; i < (int)SceneType::MAX; i++) {
-		scenes[i]->Init();
-	}
-
+	scenes[0]->Init();
 }
 
 void SceneManager::ReleaseAll()
@@ -27,6 +31,7 @@ void SceneManager::ChangeScene(SceneType newScene)
 {
 	scenes[(int)s_type]->End();
 	s_type = newScene;
+	scenes[(int)s_type]->Init();
 	scenes[(int)s_type]->Start();
 }
 
