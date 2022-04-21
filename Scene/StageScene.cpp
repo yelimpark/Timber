@@ -1,483 +1,257 @@
 #include "StageScene.h"
 #include <sstream>
-#include <SFML/Audio.hpp>
+#include "../Manager/ResourceMgr.h"
 
 using namespace sf;
 using namespace std;
 
-StageScene::StageScene(SceneType s_type, sf::RenderWindow* window)
-    :Scene(s_type,window)
+StageScene::StageScene(SceneManager& sceneManager)
+    :Scene(sceneManager)
 {
 
 }
 
-bool StageScene::initialize()
+bool StageScene::Init()
 {
-    return false;
-}
+    random_device rd;
+    mt19937 gen(rd());
 
-void StageScene::update()
-{
-}
+    player.init();
 
-void UpdateBranches(side sides[], int length, mt19937& gen)
-{
-    for (int i = length - 1; i >= 0; --i)
-    {
-        sides[i] = sides[i - 1];
+    for (int i = 0; i < clouds_size; i++) {
+        clouds[i].init(*ResourceMgr::instance()->GetTexture("MAINCLOUDTEX"));
     }
-    int rnd = gen() % 5;
-    switch (rnd)
-    {
-    case 0:
-        sides[0] = side::LEFT;
-        break;
-    case 1:
-        sides[0] = side::RIGHT;
-        break;
-    default:
-        sides[0] = side::NONE;
-        break;
-    }
-}
 
-void StageScene::render()
-{
-    random_device rd;   // non-deterministic generator
-    mt19937 gen(rd());  // to seed mersenne twister.
+    bee.init(*ResourceMgr::instance()->GetTexture("MAINBEETEX"));
 
-    Font fontKOMIKAP;
-    fontKOMIKAP.loadFromFile("fonts/KOMIKAP_.ttf");
+    timeBar.init(6.0f);
 
-    Text textMessage;
-    textMessage.setFont(fontKOMIKAP);
+    spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("MAINBGTEX"));
+    spriteBackground.setPosition(0, 0);
+
+    spriteTree.setTexture(*ResourceMgr::instance()->GetTexture("MAINTREETEX"));
+    spriteTree.setPosition(810, 0);
+
+    chop.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("CHOPSOUND"));
+    death.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("DEATHSOUND"));
+    oot.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("OOTSOUND"));
+
+    textMessage.setFont(*ResourceMgr::instance()->GetFont("MAINFONT"));
     textMessage.setString("Press Enter to start!");
     textMessage.setFillColor(Color::White);
     textMessage.setCharacterSize(75);
 
-    FloatRect textRect = textMessage.getLocalBounds();
+    textRect = textMessage.getLocalBounds();
     textMessage.setOrigin(
         textRect.left + textRect.width * 0.5f,
         textRect.top + textRect.height * 0.5f
     );
     textMessage.setPosition(1920 * 0.5f, 1080 * 0.5f);
 
-    Text textScore;
-    textScore.setFont(fontKOMIKAP);
+    textScore.setFont(*ResourceMgr::instance()->GetFont("MAINFONT"));
     textScore.setString("Score = 0");
     textScore.setFillColor(Color::White);
     textScore.setCharacterSize(100);
     textScore.setPosition(20, 20);
 
-    Texture textureBackground;
-    textureBackground.loadFromFile("graphics/background.png");
-
-    Sprite spriteBackground;
-    spriteBackground.setTexture(textureBackground);
-    spriteBackground.setPosition(0, 0);
-
-    Texture textureCloud;
-    textureCloud.loadFromFile("graphics/cloud.png");
-    Sprite spriteCloud1;
-    Sprite spriteCloud2;
-    Sprite spriteCloud3;
-    spriteCloud1.setTexture(textureCloud);
-    spriteCloud2.setTexture(textureCloud);
-    spriteCloud3.setTexture(textureCloud);
-    spriteCloud1.setPosition(0, 0);
-    spriteCloud2.setPosition(0, 150);
-    spriteCloud3.setPosition(0, 300);
-
-    Texture textureBee;
-    textureBee.loadFromFile("graphics/bee.png");
-    Sprite spriteBee;
-    spriteBee.setTexture(textureBee);
-    spriteBee.setPosition(0, 800);
-
-    Texture textureTree;
-    textureTree.loadFromFile("graphics/tree.png");
-    Sprite spriteTree;
-    spriteTree.setTexture(textureTree);
-    spriteTree.setPosition(810, 0);
-
-    Texture textureBranch;
-    textureBranch.loadFromFile("graphics/branch.png");
-    Sprite spriteBranch;
-
-    ///////////////
-    Texture texturePlayer;
-    texturePlayer.loadFromFile("graphics/player.png");
-    player = new Player(texturePlayer, 580, 720, side::LEFT);
-    ////////////////////
-
-    Texture textureRIP;
-    textureRIP.loadFromFile("graphics/rip.png");
-    Sprite spriteRIP;
-    spriteRIP.setTexture(textureRIP);
-    spriteRIP.setPosition(600, 860);
-
-    Texture textureAxe;
-    textureAxe.loadFromFile("graphics/axe.png");
-    Sprite spriteAxe;
-    spriteAxe.setTexture(textureAxe);
-    spriteAxe.setPosition(700, 830);
-
-    Texture textureLog;
-    textureLog.loadFromFile("graphics/log.png");
-    Sprite spriteLog;
-    spriteLog.setTexture(textureLog);
-    spriteLog.setPosition(810, 720);
-
-    SoundBuffer chopBuffer;
-    chopBuffer.loadFromFile("sound/chop.wav");
-    Sound chop;
-    chop.setBuffer(chopBuffer);
-
-    SoundBuffer deathBuffer;
-    deathBuffer.loadFromFile("sound/death.wav");
-    Sound death;
-    death.setBuffer(deathBuffer);
-
-    SoundBuffer ootBuffer;
-    ootBuffer.loadFromFile("sound/out_of_time.wav");
-    Sound oot;
-    oot.setBuffer(ootBuffer);
-
-    float logSpeedX = 1000;
-    float logSpeedY = -1500;
-
-    const float AXE_POSITION_LEFT = 700;
-    const float AXE_POSITION_RIGHT = 1075;
-
-    float beeSpeed = 0.f;
-
-    bool cloud1Active = false;
-    float cloud1Speed = 0.f;
-    bool cloud2Active = false;
-    float cloud2Speed = 0.f;
-    bool cloud3Active = false;
-    float cloud3Speed = 0.f;
-
-    const int countBranches = 6;
-    Sprite spriteBranches[countBranches];
-    side sideBranches[countBranches];
+    flyingLog.init();
 
     for (int i = 0; i < countBranches; i++)
     {
-        spriteBranches[i].setTexture(textureBranch);
+        spriteBranches[i].setTexture(*ResourceMgr::instance()->GetTexture("MAINBRANCHTEX"));
         spriteBranches[i].setPosition(-2000, -2000);
         spriteBranches[i].setOrigin(220, 40);
 
         sideBranches[i] = side::NONE;
     }
 
-    RectangleShape timerBar;
-    float timeBarWidth = 400;
-    float timerBarHeight = 80;
-    Vector2f timerBarSize = Vector2f(timeBarWidth, timerBarHeight);
-    timerBar.setSize(timerBarSize);
-    Vector2f timerPos = Vector2f(1920 * 0.5f - timeBarWidth * 0.5f, 980.f);
-    timerBar.setPosition(timerPos);
-    timerBar.setFillColor(Color::Red);
+    acceptInput = false;
+    isPause = true;
 
-    Clock clock;
-    const float timeMax = 6.0f;
-    float timeRemaining = timeMax;
-    float timerBarWidthPerSecond = timeBarWidth / timeMax;
-    bool logActive = false;
-    bool acceptInput = false;
-    bool beeActive = false;
-    bool isPause = true;
+    return true;
+}
 
-    int score = 0;
-    while (window->isOpen())
+void StageScene::HanddleInput(sf::Event& event)
+{
+    switch (event.type)
     {
-        Time dt = clock.restart();
-        Event event;
-        while (window->pollEvent(event))
+    case Event::KeyPressed:
+        switch (event.key.code)
         {
-            switch (event.type)
+        case Keyboard::Return:
+        {
+            isPause = false;
+
+            score = 0;
+            timeBar.HanddleInput(event.key.code, score);
+            acceptInput = true;
+
+            for (int i = 0; i < countBranches; ++i)
             {
-            case Event::Closed:
-                window->close();
-                break;
-            case Event::KeyPressed:
-                switch (event.key.code)
-                {
-                case Keyboard::Escape:
-                    window->close();
-                    break;
-                case Keyboard::Return:
-                {
-                    isPause = false;
+                sideBranches[i] = side::NONE;
+            }
+            player.HanddleInput(event.key.code);
+        }
+        break;
+        case Keyboard::Left:
+        case Keyboard::Right:
+            if (acceptInput && !isPause)
+            {
+                chop.play();
 
-                    score = 0;
-                    timeRemaining = timeMax;
-                    acceptInput = true;
+                player.HanddleInput(event.key.code);
 
-                    for (int i = 0; i < countBranches; ++i)
-                    {
-                        sideBranches[i] = side::NONE;
-                    }
-                    spriteRIP.setPosition(675, 2000);
-                    player->HandleInput(Keyboard::Return);
+                ++score;
+
+                for (int i = countBranches - 1; i > 0; --i)
+                {
+                    sideBranches[i] = sideBranches[i - 1];
                 }
-                break;
-                case Keyboard::Left:
-                    if (acceptInput && !isPause)
-                    {
-                        chop.play();
-                        player->HandleInput(Keyboard::Left);
-                        ++score;
-                        timeRemaining += (2 / score) + 0.15f; // 스코어가 커지면 커질수록 시간을 작게 주려고
-                        if (timeRemaining > timeMax)
-                        {
-                            timeRemaining = timeMax;
-                        }
-                        spriteAxe.setPosition(AXE_POSITION_LEFT, spriteAxe.getPosition().y);
-
-                        UpdateBranches(sideBranches, countBranches, gen);
-                        spriteLog.setPosition(810, 720);
-                        logSpeedX = 5000;
-                        logActive = true;
-                        acceptInput = false;
-                    }
+                int rnd = gen() % 5;
+                switch (rnd)
+                {
+                case 0:
+                    sideBranches[0] = side::LEFT;
                     break;
-                case Keyboard::Right:
-                    if (acceptInput && !isPause)
-                    {
-                        chop.play();
-                        player->HandleInput(Keyboard::Right);
-                        ++score;
-                        timeRemaining += (2 / score) + 0.15f; // 스코어가 커지면 커질수록 시간을 작게 주려고
-                        if (timeRemaining > timeMax)
-                        {
-                            timeRemaining = timeMax;
-                        }
-                        spriteAxe.setPosition(AXE_POSITION_RIGHT, spriteAxe.getPosition().y);
-
-                        UpdateBranches(sideBranches, countBranches, gen);
-                        spriteLog.setPosition(810, 720);
-                        logSpeedX = -5000;
-                        logActive = true;
-                        acceptInput = false;
-                    }
+                case 1:
+                    sideBranches[0] = side::RIGHT;
                     break;
                 default:
+                    sideBranches[0] = side::NONE;
                     break;
                 }
+
+
+                acceptInput = false;
+            }
+            break;
+        default:
+            break;
+        }
+        break;
+    case Event::KeyReleased:
+        if (event.key.code == Keyboard::Left || event.key.code == Keyboard::Right)
+        {
+            if (!isPause)
+            {
+                acceptInput = true;
+                player.AtKeyReleased();
+            }
+        }
+        break;
+    default:
+        break;
+    }
+}
+
+
+void StageScene::Update(float dt)
+{
+    if (!isPause)
+    {
+
+        bee.Update(dt, gen);
+
+        for (int i = 0; i < clouds_size; i++) {
+            clouds[i].Update(dt, gen);
+        }
+
+        timeBar.Update(dt);
+
+        for (int i = 0; i < countBranches; i++)
+        {
+            float height = 150 * i;
+            switch (sideBranches[i])
+            {
+            case side::LEFT:
+                spriteBranches[i].setPosition(610, height);
+                spriteBranches[i].setRotation(180);
                 break;
-            case Event::KeyReleased:
-                if (event.key.code == Keyboard::Left || event.key.code == Keyboard::Right)
-                {
-                    if (!isPause)
-                    {
-                        acceptInput = true;
-                        spriteAxe.setPosition(2000, spriteAxe.getPosition().y);
-                    }
-                }
+            case side::RIGHT:
+                spriteBranches[i].setPosition(1330, height);
+                spriteBranches[i].setRotation(0);
                 break;
             default:
+                spriteBranches[i].setPosition(-2000, -2000);
                 break;
             }
         }
 
+        stringstream ss;
+        ss << "Score = " << score;
+        textScore.setString(ss.str());
 
-        //업데이트
-
-        if (!isPause)
+        if (timeBar.IsEnd())
         {
-            if (!beeActive) //벌그리기
-            {
-                //벌 초기화
-                beeSpeed = gen() % 200 + 200;
-                beeSpeed *= -1.f;
-                float y = gen() % 500 + 500;
-                spriteBee.setPosition(2000, y);
-                beeActive = true;
-            }
-            else
-            {
-                //벌이동, 화면밖으로 나갔는지 테스트
-                float deltaX = beeSpeed * dt.asSeconds();
-                Vector2f currPos = spriteBee.getPosition();
-                currPos.x += deltaX;
-                spriteBee.setPosition(currPos);
-
-                if (currPos.x < -100)
-                {
-                    beeActive = false;
-                }
-
-            }
-            if (!cloud1Active)
-            {
-                cloud1Speed = gen() % 200 + 10;
-                cloud1Speed *= -1.f;
-                float y = gen() % 1 + 10;
-                spriteCloud1.setPosition(2000, y);
-                cloud1Active = true;
-            }
-            else
-            {
-                float deltaX = cloud1Speed * dt.asSeconds();
-                Vector2f currPos = spriteCloud1.getPosition();
-                currPos.x += deltaX;
-                spriteCloud1.setPosition(currPos);
-
-                if (currPos.x < -500)
-                {
-                    cloud1Active = false;
-                }
-            }
-            if (!cloud2Active)
-            {
-                cloud2Speed = gen() % 200 + 30;
-                float y = gen() % 150 + 50;
-                spriteCloud2.setPosition(-500, y);
-                cloud2Active = true;
-            }
-            else
-            {
-                float deltaX = cloud2Speed * dt.asSeconds();
-                Vector2f currPos = spriteCloud2.getPosition();
-                currPos.x += deltaX;
-                spriteCloud2.setPosition(currPos);
-
-                if (currPos.x > 1980)
-                {
-                    cloud2Active = false;
-                }
-            }
-            if (!cloud3Active)
-            {
-                cloud3Speed = gen() % 200 + 10;
-                cloud3Speed *= -1.f;
-                float y = gen() % 300 + 50;
-                spriteCloud3.setPosition(2000, y);
-                cloud3Active = true;
-            }
-            else
-            {
-                float deltaX = cloud3Speed * dt.asSeconds();
-                Vector2f currPos = spriteCloud3.getPosition();
-                currPos.x += deltaX;
-                spriteCloud3.setPosition(currPos);
-
-                if (currPos.x < -500)
-                {
-                    cloud3Active = false;
-                }
-            }
-
-            for (int i = 0; i < countBranches; i++)
-            {
-                float height = 150 * i;
-                switch (sideBranches[i])
-                {
-                case side::LEFT:
-                    spriteBranches[i].setPosition(610, height);
-                    spriteBranches[i].setRotation(180);
-                    break;
-                case side::RIGHT:
-                    spriteBranches[i].setPosition(1330, height);
-                    spriteBranches[i].setRotation(0);
-                    break;
-                default:
-                    spriteBranches[i].setPosition(-2000, -2000);
-                    break;
-                }
-            }
-
-            stringstream ss;
-            ss << "Score = " << score;
-            textScore.setString(ss.str());
-
-            timeRemaining -= dt.asSeconds();
-            timerBarSize.x = timeRemaining * timerBarWidthPerSecond;
-            timerBar.setSize(timerBarSize);
-
-            if (timeRemaining < 0.f)
-            {
-                timerBarSize.x = 0.f;
-                timerBar.setSize(timerBarSize);
-
-                isPause = true;
-                textMessage.setString("Out Of Time!!");
-                FloatRect textRect = textMessage.getLocalBounds();
-                textMessage.setOrigin(
-                    textRect.left + textRect.width * 0.5f,
-                    textRect.top + textRect.height * 0.5f
-                );
-                oot.play();
-            }
-
-            if (logActive)
-            {
-                Vector2f logPos = spriteLog.getPosition();
-                logPos.x += logSpeedX * dt.asSeconds();
-                logPos.y += logSpeedY * dt.asSeconds();
-                spriteLog.setPosition(logPos);
-
-                if (logPos.x < -100 || logPos.x > 2000)
-                {
-                    logActive = false;
-                    spriteLog.setPosition(810, 720);
-                }
-            }
-
-            if (sideBranches[countBranches - 1] == player->getSide())
-            {
-                isPause = true;
-                acceptInput = false;
-                player->Dead();
-                spriteRIP.setPosition(525, 700);
-
-                textMessage.setString("SQUISHED!");
-                FloatRect textRect = textMessage.getLocalBounds();
-                textMessage.setOrigin(
-                    textRect.left + textRect.width * 0.5f,
-                    textRect.top + textRect.height * 0.5f);
-
-                death.play();
-            }
-
+            isPause = true;
+            textMessage.setString("Out Of Time!!");
+            FloatRect textRect = textMessage.getLocalBounds();
+            textMessage.setOrigin(
+                textRect.left + textRect.width * 0.5f,
+                textRect.top + textRect.height * 0.5f
+            );
+            oot.play();
         }
 
+        flyingLog.Update(dt);
 
-        //그리기
+        if (sideBranches[countBranches - 1] == player.getSide())
+        {
+            isPause = true;
+            acceptInput = false;
+            player.Dead();
 
+            textMessage.setString("SQUISHED!");
+            FloatRect textRect = textMessage.getLocalBounds();
+            textMessage.setOrigin(
+                textRect.left + textRect.width * 0.5f,
+                textRect.top + textRect.height * 0.5f);
+
+            death.play();
+        }
+
+    }
+}
+
+void StageScene::render(sf::RenderWindow* window)
+{
         window->clear();
         window->draw(spriteBackground);
-        window->draw(spriteCloud1);
-        window->draw(spriteCloud2);
-        window->draw(spriteCloud3);
+        for (int i = 0; i < clouds_size; i++) {
+            clouds[i].render(window);
+        }
         window->draw(spriteTree);
-        window->draw(spriteLog);
+
+        flyingLog.render(window);
+
         for (int i = 0; i < countBranches; i++)
         {
             window->draw(spriteBranches[i]);
         }
-        //ui는 나중에찍어주새
-        player->render(window);
-        window->draw(spriteAxe);
-        window->draw(spriteRIP);
-        window->draw(spriteBee);
+        player.render(window);
 
+        bee.render(window);
+
+        timeBar.render(window);
 
         window->draw(textScore);
         if (isPause)
         {
             window->draw(textMessage);
         }
-        window->draw(timerBar);
         window->display();
 
+}
 
-    }
+void StageScene::Start()
+{
+}
+
+void StageScene::End()
+{
 }
 
 StageScene::~StageScene()
 {
-    delete player;
+    
 }

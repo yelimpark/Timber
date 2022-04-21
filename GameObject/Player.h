@@ -1,5 +1,5 @@
 #pragma once
-#include "ImgObj.h"
+#include <SFML/Graphics.hpp>
 
 enum class side
 {
@@ -8,16 +8,29 @@ enum class side
     NONE
 };
 
-class Player : public ImgObj {
+enum class AXE_POSITION {
+    LEFT = 700,
+    RIGHT = 1075
+};
+
+class Player {
 private:
     side p_side;
 
+    sf::Sprite spritePlayer;
+
+    sf::Sprite spriteAxe;
+
 public:
-    Player(Texture& texture, int posX, int posY, side p_side);
+    Player();
 
     side getSide();
 
-    void HandleInput(Keyboard::Key key);
+    void init();
+
+    void HanddleInput(sf::Keyboard::Key key);
+
+    void AtKeyReleased();
 
     void Update();
 

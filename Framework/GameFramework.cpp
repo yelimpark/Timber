@@ -1,44 +1,58 @@
 #include "GameFramework.h"
+#include "../Manager/ResourceMgr.h"
 
-#include <SFML/Graphics.hpp>
 #include <random>
 #include <sstream>
 #include <SFML/Audio.hpp>
 
 using namespace sf;
-using namespace std;
 
 GameFramework::GameFramework()
 {
-    //sceneManager = new SceneManager(SceneType::STAGE);
+    VideoMode vm(1920, 1080);
+	window = new RenderWindow(vm, "Timber!", Style::Default);
+    sceneManager = new SceneManager(SceneType::STAGE);
 }
 
-bool GameFramework::Initialize()
+bool GameFramework::Init()
 {
+	ResourceMgr::instance()->Init();
+	sceneManager->Init();
     return true;
 }
 
 bool GameFramework::Run()
 {
-    VideoMode vm(1920, 1080); //해상도 정보
-    RenderWindow window(vm, "Timber!", Style::Default); //Fullscreen 해서 풀스크린 할 수 있는데 개발할 때는 창모드가 편하다
+	while (window->isOpen())
+	{
+		Time dt = clock.restart();
 
-    //sceneManager.update(scene);
+		Event event;
+		while (window->pollEvent(event))
+		{
+			switch (event.type)
+			{
+			case Event::Closed:
+				window->close();
+				break;
+			default:
+				sceneManager->HanddleInput(event);
+				break;
+			}
+			break;
+		}
 
-    //sceneManager.render(scene);
+		sceneManager->Update(dt.asSeconds());
 
-    //프로그램 종료를 위한 내용
+		window->clear();
+		sceneManager->render(window);
+		window->display();
+	}
 
-
-    // testing...
-    StageScene stageScene(SceneType::STAGE, &window);
-
-    stageScene.render();
-
-    return false;
+    return 0;
 }
 
 GameFramework::~GameFramework()
 {
-    //delete sceneManager;
+    delete sceneManager;
 }

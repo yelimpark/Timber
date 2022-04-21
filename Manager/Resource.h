@@ -1,41 +1,32 @@
 #pragma once
-#include <cstring>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <string>
 
-template < typename T >
-class Resource {
-private:
-	const char* path;
-	char* name;
-	T* object;
+using namespace sf;
 
-public:
-	Resource(const char * path, const char * name);
-
-	char* GetName();
-
-	~Resource();
+enum class ResourceTypes
+{
+	None = -1,
+	Texture,
+	Font,
+	SoundBuffer,
+	Count,
 };
 
-template<typename T>
-inline Resource<T>::Resource(const char* path, const char* name)
-	:path(path)
+struct Resource
 {
-	this->name = new char[strlen(name)];
-	strcpy_s(this->name, strlen(this->name), name);
-	object = new T();
-	object->loadFromFile(path);
-}
+	std::string id;
+	std::string path;
+	ResourceTypes resourceType;
 
-template<typename T>
-inline char* Resource<T>::GetName()
-{
-	return name;
-}
+	Texture* texture;
+	Font* font;
+	SoundBuffer* soundBuffer;
 
-template<typename T>
-inline Resource<T>::~Resource()
-{
-	delete[]name;
-	delete object;
-}
+	Resource();
+	Resource(std::string id, std::string path, ResourceTypes resourceType);
+	~Resource();
+	bool Load();
+};
+

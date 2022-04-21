@@ -149,8 +149,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Framework\GameFramework.cpp" />
-    <ClCompile Include="GameObject\ImgObj.cpp" />
+    <ClCompile Include="GameObject\FlyingLog.cpp" />
+    <ClCompile Include="GameObject\LowDynamicObj.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />
+    <ClCompile Include="GameObject\TimeBar.cpp" />
+    <ClCompile Include="Manager\Resource.cpp" />
+    <ClCompile Include="Manager\ResourceMgr.cpp" />
     <ClCompile Include="Manager\SceneManager.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\StageScene.cpp" />
@@ -158,10 +162,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\GameFramework.h" />
-    <ClInclude Include="GameObject\ImgObj.h" />
+    <ClInclude Include="GameObject\FlyingLog.h" />
+    <ClInclude Include="GameObject\LowDynamicObj.h" />
     <ClInclude Include="GameObject\Player.h" />
+    <ClInclude Include="GameObject\TimeBar.h" />
     <ClInclude Include="Manager\Resource.h" />
-    <ClInclude Include="Manager\ResourceManager.h" />
+    <ClInclude Include="Manager\ResourceMgr.h" />
     <ClInclude Include="Manager\SceneManager.h" />
     <ClInclude Include="Manager\Singleton.h" />
     <ClInclude Include="Scene\Scene.h" />

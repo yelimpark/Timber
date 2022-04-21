@@ -1,8 +1,10 @@
 #include "Player.h"
+#include "../Manager/ResourceMgr.h"
 
-Player::Player(Texture& texture, int posX, int posY, side p_side)
-	:ImgObj(texture, posX, posY), p_side(p_side)
+Player::Player()
+	:p_side(side::LEFT)
 {
+
 }
 
 side Player::getSide()
@@ -10,25 +12,44 @@ side Player::getSide()
 	return p_side;
 }
 
-void Player::HandleInput(Keyboard::Key key)
+void Player::init()
+{
+	spritePlayer.setTexture(*ResourceMgr::instance()->GetTexture("MAINPLAYERTEX"));
+	spritePlayer.setPosition(580, 720);
+	p_side = side::LEFT;
+
+	spriteAxe.setTexture(*ResourceMgr::instance()->GetTexture("MAINAXETEX"));
+	spriteAxe.setPosition(700, 830);
+}
+
+void Player::HanddleInput(sf::Keyboard::Key key)
 {
 	switch (key)
 	{
 	case Keyboard::Return:
-		sprite.setPosition(580, 720);
+		spritePlayer.setPosition(580, 720);
 		break;
 	case Keyboard::Left:
 		p_side = side::LEFT;
-		sprite.setPosition(580, 720);
+		spritePlayer.setPosition(580, 720);
+		spriteAxe.setPosition((float)AXE_POSITION::LEFT, spriteAxe.getPosition().y);
 		break;
 	case Keyboard::Right:
 		p_side = side::RIGHT;
-		sprite.setPosition(1200, 720);
+		spritePlayer.setPosition(1200, 720);
+		spriteAxe.setPosition((float)AXE_POSITION::RIGHT, spriteAxe.getPosition().y);
 		break;
 	default:
 		break;
 	}
 }
+
+void Player::AtKeyReleased()
+{
+	spriteAxe.setPosition(2000, spriteAxe.getPosition().y);
+}
+
+
 
 void Player::Update()
 {
@@ -37,12 +58,13 @@ void Player::Update()
 
 void Player::Dead()
 {
-	sprite.setPosition(2000, 660);
+	spritePlayer.setTexture(*ResourceMgr::instance()->GetTexture("MAINRIPTEX"));
 }
 
 void Player::render(sf::RenderWindow* window)
 {
-	window->draw(sprite);
+	window->draw(spritePlayer);
+	window->draw(spriteAxe);
 }
 
 Player::~Player()

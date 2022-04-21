@@ -9,7 +9,7 @@ protected:
     Singleton()
     {
         assert(!m_kInstance);
-        long long offset = (long long)(T*)1 - (long long)(Singleton<t> *)(T*)1;
+        long long offset = (long long)(T*)1 - (long long)(Singleton<T> *)(T*)1;
         m_kInstance = (T*)((long long)this + offset);
     }
     ~Singleton()
@@ -36,3 +36,6 @@ public:
 private:
     static T* m_kInstance;
 };
+
+template <typename T>
+T* Singleton<T>::m_kInstance = 0;

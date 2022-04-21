@@ -1,15 +1,18 @@
 #pragma once
-//#include "../Manager/SceneManager.h"
-#include "../Scene/StageScene.h"
+#include "../Manager/SceneManager.h"
 
 class GameFramework {
 private:
-	//SceneManager* sceneManager;
+	SceneManager* sceneManager;
+
+	sf::RenderWindow* window;
+
+	sf::Clock clock;
 
 public:
 	GameFramework();
 
-	bool Initialize();
+	bool Init();
 
 	bool Run();
 
