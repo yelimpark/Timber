@@ -8,7 +8,7 @@ class CharSelectPointer
 public:
 	CharSelectPointer();
 
-	void Init(float width, float height);
+	void Init(float width, float height, Color color);
 
 	void draw(RenderWindow& window);
 
@@ -21,4 +21,5 @@ public:
 private:
 	int selectedItemIndex;
 	RectangleShape pointCharacter[MAX_NUMBER_OF_ITEMS];
+	Color color;
 };

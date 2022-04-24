@@ -5,14 +5,18 @@
 using namespace std;
 
 CharaSelectScene::CharaSelectScene(SceneManager& sceneManager)
-	:Scene(sceneManager)
+    :Scene(sceneManager), selectPointerCount(0)
 {
 }
 
 void CharaSelectScene::Init()
-{
-    selectPointer.Init(1920, 1080);
+{    
+    selectPointers[0].Init(1920, 1080, Color::Yellow);
 
+    if (sceneManager.GetGameVariables().Mode == GAME_MOD::MULTI) {
+        selectPointers[1].Init(1920, 1080, Color::Magenta);
+    }
+  
 	spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("MAINBGTEX"));
 	spriteBackground.setPosition(0, 0);
 
@@ -38,16 +42,29 @@ void CharaSelectScene::HanddleInput(sf::Event& event)
         switch (event.key.code)
         {
         case Keyboard::Return:
-            sceneManager.GetGameVariables().selectedCharaIndex = selectPointer.GetPressedItem();
+            sceneManager.GetGameVariables().selectedCharaIndex1p = selectPointers[0].GetPressedItem();
             sceneManager.ChangeScene(SceneType::STAGE);
             break;
 
         case Keyboard::Left:
-            selectPointer.MoveLeft();
+            selectPointers[0].MoveLeft();
             break;
 
         case Keyboard::Right:
-            selectPointer.MoveRight();
+            selectPointers[0].MoveRight();
+            break;
+
+        case Keyboard::Space:
+            sceneManager.GetGameVariables().selectedCharaIndex1p = selectPointers[1].GetPressedItem();
+            sceneManager.ChangeScene(SceneType::STAGE);
+            break;
+
+        case Keyboard::A:
+            selectPointers[1].MoveLeft();
+            break;
+
+        case Keyboard::D:
+            selectPointers[1].MoveRight();
             break;
         }
         break;
@@ -64,7 +81,11 @@ void CharaSelectScene::Render(sf::RenderWindow& window)
 {
     window.draw(spriteBackground);
 
-    selectPointer.draw(window);
+    if (sceneManager.GetGameVariables().Mode == GAME_MOD::MULTI) {
+        selectPointers[1].draw(window);
+    }
+
+    selectPointers[0].draw(window);
 
     for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++) {
         window.draw(spritePlayers[i]);

@@ -10,7 +10,9 @@ private:
 
 	Sprite spritePlayers[MAX_NUMBER_OF_ITEMS];
 
-	CharSelectPointer selectPointer;
+	CharSelectPointer selectPointers[2];
+
+	int selectPointerCount;
 
 public:
 	CharaSelectScene(SceneManager& sceneManager);

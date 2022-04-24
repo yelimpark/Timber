@@ -5,7 +5,7 @@ CharSelectPointer::CharSelectPointer()
 {
 }
 
-void CharSelectPointer::Init(float width, float height)
+void CharSelectPointer::Init(float width, float height, Color color)
 {
 	float PosX = width * 0.5f - 250;
 
@@ -19,9 +19,9 @@ void CharSelectPointer::Init(float width, float height)
 		);
 		pointCharacter[i].setPosition(Vector2f(PosX + 250 * i, height / 2));
 	}
-
+	this->color = color;
 	selectedItemIndex = 0;
-	pointCharacter[selectedItemIndex].setFillColor(Color::Yellow);
+	pointCharacter[selectedItemIndex].setFillColor(color);
 }
 
 void CharSelectPointer::draw(RenderWindow& window)
@@ -38,7 +38,7 @@ void CharSelectPointer::MoveLeft()
 	{
 		pointCharacter[selectedItemIndex].setFillColor(Color::Transparent);
 		selectedItemIndex--;
-		pointCharacter[selectedItemIndex].setFillColor(Color::Yellow);
+		pointCharacter[selectedItemIndex].setFillColor(color);
 	}
 }
 
@@ -48,7 +48,7 @@ void CharSelectPointer::MoveRight()
 	{
 		pointCharacter[selectedItemIndex].setFillColor(Color::Transparent);
 		selectedItemIndex++;
-		pointCharacter[selectedItemIndex].setFillColor(Color::Yellow);
+		pointCharacter[selectedItemIndex].setFillColor(color);
 	}
 }
 
