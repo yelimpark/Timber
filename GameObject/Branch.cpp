@@ -1,5 +1,8 @@
 #include "Branch.h"
 #include "../Manager/ResourceMgr.h"
+#include <random>
+
+using namespace std;
 
 Branch::Branch()
 	:b_side(side::NONE)
@@ -14,8 +17,11 @@ void Branch::Init()
     b_side = side::NONE;
 }
 
-void Branch::HanddleInput(sf::Keyboard::Key key, std::mt19937& gen)
+void Branch::HanddleInput(sf::Keyboard::Key key)
 {
+    random_device rd;
+    mt19937 gen(rd());
+
 	switch (key)
 	{
 	case Keyboard::Return:

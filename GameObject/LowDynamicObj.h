@@ -1,6 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <random>
 
 class LowDynamicObj {
 private:
@@ -15,7 +14,7 @@ public:
 
 	void init(sf::Texture& texture);
 
-	void Update(float dt, std::mt19937& gen, float defHeight);
+	void Update(float dt, float defHeight);
 
 	void Render(sf::RenderWindow& window);
 

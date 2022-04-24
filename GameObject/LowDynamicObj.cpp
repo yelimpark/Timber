@@ -1,4 +1,7 @@
 #include "LowDynamicObj.h"
+#include <random>
+
+using namespace std;
 
 LowDynamicObj::LowDynamicObj()
 	:speed(0.f), active(false)
@@ -14,8 +17,11 @@ void LowDynamicObj::init(sf::Texture& texture)
     active = false;
 }
 
-void LowDynamicObj::Update(float dt, std::mt19937& gen, float defHeight)
+void LowDynamicObj::Update(float dt, float defHeight)
 {
+    random_device rd;
+    mt19937 gen(rd());
+
     if (!active)
     {
         speed = (-1) * gen() % 200 + 200;

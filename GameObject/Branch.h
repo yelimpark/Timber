@@ -1,6 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <random>
 #include "side.h"
 
 class Branch {
@@ -14,7 +13,7 @@ public:
 
 	void Init();
 
-	void HanddleInput(sf::Keyboard::Key key, std::mt19937& gen);
+	void HanddleInput(sf::Keyboard::Key key);
 
 	void Update(float height);
 

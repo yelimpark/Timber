@@ -15,8 +15,6 @@ using namespace sf;
 
 class StageScene : public Scene{
 private:
-	std::mt19937 gen;
-
 	Player player;
 
 	LowDynamicObj clouds[clouds_size];
@@ -25,15 +23,16 @@ private:
 
 	TimeBar timeBar;
 
-	Sprite spriteBackground;
-
-	Sprite spriteTree;
-
 	FlyingLog flyingLog;
 
 	Branch branches[countBranches];
 
+	Sprite spriteBackground;
+
+	Sprite spriteTree;
+
 	bool acceptInput;
+
 	bool isPause;
 
 	int score;

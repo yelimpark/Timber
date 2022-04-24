@@ -13,9 +13,6 @@ StageScene::StageScene(SceneManager& sceneManager)
 
 void StageScene::Init()
 {
-    random_device rd;
-    mt19937 gen(rd());
-
     player.init(sceneManager.GetGameVariables().selectedCharaIndex);
 
     for (int i = 0; i < clouds_size; i++) {
@@ -82,7 +79,7 @@ void StageScene::HanddleInput(sf::Event& event)
 
             for (int i = 0; i < countBranches; ++i)
             {
-                branches[i].HanddleInput(event.key.code, gen);
+                branches[i].HanddleInput(event.key.code);
             }
             player.HanddleInput(event.key.code);
         }
@@ -104,7 +101,7 @@ void StageScene::HanddleInput(sf::Event& event)
                 {
                     branches[i] = branches[i - 1];
                 }
-                branches[0].HanddleInput(event.key.code, gen);
+                branches[0].HanddleInput(event.key.code);
 
                 acceptInput = false;
             }
@@ -133,10 +130,10 @@ void StageScene::Update(float dt)
     if (!isPause)
     {
 
-        bee.Update(dt, gen, 500);
+        bee.Update(dt, 500);
 
         for (int i = 0; i < clouds_size; i++) {
-            clouds[i].Update(dt, gen, 0);
+            clouds[i].Update(dt, 0);
         }
 
         timeBar.Update(dt);
