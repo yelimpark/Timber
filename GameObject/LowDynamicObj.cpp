@@ -37,9 +37,9 @@ void LowDynamicObj::Update(float dt, std::mt19937& gen, float defHeight)
     }
 }
 
-void LowDynamicObj::render(sf::RenderWindow* window)
+void LowDynamicObj::Render(sf::RenderWindow& window)
 {
-    window->draw(sprite);
+    window.draw(sprite);
 }
 
 LowDynamicObj::~LowDynamicObj()

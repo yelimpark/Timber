@@ -12,7 +12,7 @@ private:
 public:
 	GameFramework();
 
-	bool Init();
+	void Init();
 
 	bool Run();
 

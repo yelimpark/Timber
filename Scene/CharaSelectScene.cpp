@@ -9,8 +9,10 @@ CharaSelectScene::CharaSelectScene(SceneManager& sceneManager)
 {
 }
 
-bool CharaSelectScene::Init()
+void CharaSelectScene::Init()
 {
+    selectPointer.Init(1920, 1080);
+
 	spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("MAINBGTEX"));
 	spriteBackground.setPosition(0, 0);
 
@@ -18,17 +20,14 @@ bool CharaSelectScene::Init()
 		stringstream ss;
 		ss << "MAINPLAYERTEX" << i+1;
 		spritePlayers[i].setTexture(*ResourceMgr::instance()->GetTexture(ss.str()));
+
         FloatRect characterRect = spritePlayers[i].getLocalBounds();
         spritePlayers[i].setOrigin(
             characterRect.left + characterRect.width * 0.5f,
             characterRect.top + characterRect.height * 0.5f
         );
         spritePlayers[i].setPosition(Vector2f(1920 * 0.5f + 250 * (i - 1) , 1080 * 0.5f));
-	}
-	
-	chooseChar.Init(1920, 1080);
-
-	return true;
+	}	
 }
 
 void CharaSelectScene::HanddleInput(sf::Event& event)
@@ -39,45 +38,47 @@ void CharaSelectScene::HanddleInput(sf::Event& event)
         switch (event.key.code)
         {
         case Keyboard::Return:
-            sceneManager.GetGameVariables().selectedCharaIndex = chooseChar.GetPressedItem();
+            sceneManager.GetGameVariables().selectedCharaIndex = selectPointer.GetPressedItem();
             sceneManager.ChangeScene(SceneType::STAGE);
             break;
+
         case Keyboard::Left:
-            chooseChar.MoveLeft();
+            selectPointer.MoveLeft();
             break;
 
         case Keyboard::Right:
-            chooseChar.MoveRight();
+            selectPointer.MoveRight();
             break;
         }
         break;
     default:
         break;
     }
-
 }
 
 void CharaSelectScene::Update(float dt)
 {
 }
 
-void CharaSelectScene::render(sf::RenderWindow* window)
+void CharaSelectScene::Render(sf::RenderWindow& window)
 {
-    window->draw(spriteBackground);
+    window.draw(spriteBackground);
 
-    chooseChar.draw(*window);
+    selectPointer.draw(window);
 
     for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++) {
-        window->draw(spritePlayers[i]);
+        window.draw(spritePlayers[i]);
     }
 }
 
 void CharaSelectScene::Start()
 {
+    Init();
 }
 
 void CharaSelectScene::End()
 {
+
 }
 
 CharaSelectScene::~CharaSelectScene()

@@ -11,14 +11,13 @@ GameFramework::GameFramework()
 {
     VideoMode vm(1920, 1080);
 	window = new RenderWindow(vm, "Timber!", Style::Default);
-    sceneManager = new SceneManager(SceneType::CHARA);
+    sceneManager = new SceneManager();
 }
 
-bool GameFramework::Init()
+void GameFramework::Init()
 {
 	ResourceMgr::instance()->Init();
 	sceneManager->Init();
-    return true;
 }
 
 bool GameFramework::Run()
@@ -27,6 +26,7 @@ bool GameFramework::Run()
 	{
 		Time dt = clock.restart();
 
+		// HanddleInput
 		Event event;
 		while (window->pollEvent(event))
 		{
@@ -39,13 +39,14 @@ bool GameFramework::Run()
 				sceneManager->HanddleInput(event);
 				break;
 			}
-			break;
 		}
 
+		// Update
 		sceneManager->Update(dt.asSeconds());
 
+		// Render
 		window->clear();
-		sceneManager->render(window);
+		sceneManager->Render(*window);
 		window->display();
 	}
 
@@ -54,5 +55,6 @@ bool GameFramework::Run()
 
 GameFramework::~GameFramework()
 {
+	delete window;
     delete sceneManager;
 }

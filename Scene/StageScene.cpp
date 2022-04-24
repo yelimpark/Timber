@@ -11,7 +11,7 @@ StageScene::StageScene(SceneManager& sceneManager)
 
 }
 
-bool StageScene::Init()
+void StageScene::Init()
 {
     random_device rd;
     mt19937 gen(rd());
@@ -58,17 +58,11 @@ bool StageScene::Init()
 
     for (int i = 0; i < countBranches; i++)
     {
-        spriteBranches[i].setTexture(*ResourceMgr::instance()->GetTexture("MAINBRANCHTEX"));
-        spriteBranches[i].setPosition(-2000, -2000);
-        spriteBranches[i].setOrigin(220, 40);
-
-        sideBranches[i] = side::NONE;
+        branches[i].Init();
     }
 
     acceptInput = false;
     isPause = true;
-
-    return true;
 }
 
 void StageScene::HanddleInput(sf::Event& event)
@@ -88,7 +82,7 @@ void StageScene::HanddleInput(sf::Event& event)
 
             for (int i = 0; i < countBranches; ++i)
             {
-                sideBranches[i] = side::NONE;
+                branches[i].HanddleInput(event.key.code, gen);
             }
             player.HanddleInput(event.key.code);
         }
@@ -103,24 +97,14 @@ void StageScene::HanddleInput(sf::Event& event)
 
                 ++score;
 
-                for (int i = countBranches - 1; i > 0; --i)
-                {
-                    sideBranches[i] = sideBranches[i - 1];
-                }
-                int rnd = gen() % 5;
-                switch (rnd)
-                {
-                case 0:
-                    sideBranches[0] = side::LEFT;
-                    break;
-                case 1:
-                    sideBranches[0] = side::RIGHT;
-                    break;
-                default:
-                    sideBranches[0] = side::NONE;
-                    break;
-                }
+                timeBar.HanddleInput(event.key.code, score);
 
+
+                for (int i = countBranches - 1; i > 0 ; --i)
+                {
+                    branches[i] = branches[i - 1];
+                }
+                branches[0].HanddleInput(event.key.code, gen);
 
                 acceptInput = false;
             }
@@ -144,7 +128,6 @@ void StageScene::HanddleInput(sf::Event& event)
     }
 }
 
-
 void StageScene::Update(float dt)
 {
     if (!isPause)
@@ -161,20 +144,7 @@ void StageScene::Update(float dt)
         for (int i = 0; i < countBranches; i++)
         {
             float height = 150 * i;
-            switch (sideBranches[i])
-            {
-            case side::LEFT:
-                spriteBranches[i].setPosition(610, height);
-                spriteBranches[i].setRotation(180);
-                break;
-            case side::RIGHT:
-                spriteBranches[i].setPosition(1330, height);
-                spriteBranches[i].setRotation(0);
-                break;
-            default:
-                spriteBranches[i].setPosition(-2000, -2000);
-                break;
-            }
+            branches[i].Update(height);
         }
 
         stringstream ss;
@@ -195,7 +165,7 @@ void StageScene::Update(float dt)
 
         flyingLog.Update(dt);
 
-        if (sideBranches[countBranches - 1] == player.getSide())
+        if (branches[countBranches - 1].GetSide() == player.getSide())
         {
             isPause = true;
             acceptInput = false;
@@ -213,40 +183,42 @@ void StageScene::Update(float dt)
     }
 }
 
-void StageScene::render(sf::RenderWindow* window)
+void StageScene::Render(sf::RenderWindow& window)
 {
-        window->draw(spriteBackground);
+        window.draw(spriteBackground);
         for (int i = 0; i < clouds_size; i++) {
-            clouds[i].render(window);
+            clouds[i].Render(window);
         }
-        window->draw(spriteTree);
+        window.draw(spriteTree);
 
-        flyingLog.render(window);
+        flyingLog.Render(window);
 
         for (int i = 0; i < countBranches; i++)
         {
-            window->draw(spriteBranches[i]);
+            branches[i].Render(window);
         }
-        player.render(window);
+        player.Render(window);
 
-        bee.render(window);
+        bee.Render(window);
 
-        timeBar.render(window);
+        timeBar.Render(window);
 
-        window->draw(textScore);
+        window.draw(textScore);
         if (isPause)
         {
-            window->draw(textMessage);
+            window.draw(textMessage);
         }
 
 }
 
 void StageScene::Start()
 {
+    Init();
 }
 
 void StageScene::End()
 {
+
 }
 
 StageScene::~StageScene()

@@ -10,8 +10,6 @@ private:
 
 	bool active;
 
-	std::mt19937 gen;
-
 public:
 	LowDynamicObj();
 
@@ -19,7 +17,7 @@ public:
 
 	void Update(float dt, std::mt19937& gen, float defHeight);
 
-	void render(sf::RenderWindow* window);
+	void Render(sf::RenderWindow& window);
 
 	~LowDynamicObj();
 };

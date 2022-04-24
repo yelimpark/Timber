@@ -3,21 +3,22 @@
 #define MAX_NUMBER_OF_ITEMS 3
 using namespace sf;
 
-
-class charSelect
+class CharSelectPointer
 {
 public:
-	charSelect();
+	CharSelectPointer();
 
 	void Init(float width, float height);
 
 	void draw(RenderWindow& window);
+
 	void MoveLeft();
 	void MoveRight();
 	int GetPressedItem() { return selectedItemIndex; }
 
+	~CharSelectPointer();
+
 private:
 	int selectedItemIndex;
-	Font font;
 	RectangleShape pointCharacter[MAX_NUMBER_OF_ITEMS];
 };

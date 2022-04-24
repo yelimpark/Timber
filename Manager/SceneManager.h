@@ -12,7 +12,7 @@ class Scene;
 
 class SceneManager {
 private:
-	SceneType s_type;
+	SceneType currScene;
 
 	Scene* scenes[(int)SceneType::MAX];
 
@@ -21,7 +21,7 @@ private:
 public:
 	GameVariables& GetGameVariables();
 
-	SceneManager(SceneType s_type);
+	SceneManager();
 
 	void Init();
 
@@ -33,7 +33,7 @@ public:
 
 	void Update(float dt);
 
-	void render(sf::RenderWindow* window);
+	void Render(sf::RenderWindow& window);
 
 	~SceneManager();
 };

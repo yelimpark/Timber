@@ -1,12 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
-enum class side
-{
-    LEFT,
-    RIGHT,
-    NONE
-};
+#include "side.h"
 
 enum class AXE_POSITION {
     LEFT = 700,
@@ -36,7 +30,7 @@ public:
 
     void Dead();
 
-    void render(sf::RenderWindow* window);
+    void Render(sf::RenderWindow& window);
 
     ~Player();
 };

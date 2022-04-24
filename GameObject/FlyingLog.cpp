@@ -55,9 +55,9 @@ void FlyingLog::Update(float dt)
 	}
 }
 
-void FlyingLog::render(sf::RenderWindow* window)
+void FlyingLog::Render(sf::RenderWindow& window)
 {
-	window->draw(spriteLog);
+	window.draw(spriteLog);
 }
 
 FlyingLog::~FlyingLog()

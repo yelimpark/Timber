@@ -22,7 +22,7 @@ public:
 
 	void Update(float dt);
 
-	void render(sf::RenderWindow* window);
+	void Render(sf::RenderWindow& window);
 
 	bool IsEnd();
 

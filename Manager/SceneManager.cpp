@@ -7,9 +7,10 @@ GameVariables& SceneManager::GetGameVariables()
 	return gameVal;
 }
 
-SceneManager::SceneManager(SceneType s_type)
-	:s_type(s_type)
+SceneManager::SceneManager()
+	:currScene(SceneType::CHARA)
 {
+	memset(scenes, NULL, sizeof(scenes));
 }
 
 void SceneManager::Init()
@@ -17,42 +18,41 @@ void SceneManager::Init()
 	scenes[(int)SceneType::CHARA] = new CharaSelectScene(*this);
 	scenes[(int)SceneType::STAGE] = new StageScene(*this);
 
-	scenes[0]->Init();
+	scenes[0]->Start();
 }
 
 void SceneManager::ReleaseAll()
 {
 	for (int i = 0; i < (int)SceneType::MAX; i++) {
-		delete scenes[i];
+		if (scenes[i] != nullptr) {
+			delete scenes[i];
+		}
 	}
 }
 
 void SceneManager::ChangeScene(SceneType newScene)
 {
-	scenes[(int)s_type]->End();
-	s_type = newScene;
-	scenes[(int)s_type]->Init();
-	scenes[(int)s_type]->Start();
+	scenes[(int)currScene]->End();
+	currScene = newScene;
+	scenes[(int)currScene]->Start();
 }
 
 void SceneManager::HanddleInput(sf::Event& event)
 {
-	scenes[(int)s_type]->HanddleInput(event);
+	scenes[(int)currScene]->HanddleInput(event);
 }
 
 void SceneManager::Update(float dt)
 {
-	scenes[(int)s_type]->Update(dt);
+	scenes[(int)currScene]->Update(dt);
 }
 
-void SceneManager::render(sf::RenderWindow* window)
+void SceneManager::Render(sf::RenderWindow& window)
 {
-	scenes[(int)s_type]->render(window);
+	scenes[(int)currScene]->Render(window);
 }
 
 SceneManager::~SceneManager()
 {
-	for (int i = 0; i < (int)SceneType::MAX; i++) {
-		delete scenes[i];
-	}
+	ReleaseAll();
 }

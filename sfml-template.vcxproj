@@ -149,7 +149,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Framework\GameFramework.cpp" />
-    <ClCompile Include="GameObject\charSelect.cpp" />
+    <ClCompile Include="GameObject\Branch.cpp" />
+    <ClCompile Include="GameObject\CharSelectPointer.cpp" />
     <ClCompile Include="GameObject\FlyingLog.cpp" />
     <ClCompile Include="GameObject\LowDynamicObj.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />
@@ -164,10 +165,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\GameFramework.h" />
-    <ClInclude Include="GameObject\charSelect.h" />
+    <ClInclude Include="GameObject\Branch.h" />
+    <ClInclude Include="GameObject\CharSelectPointer.h" />
     <ClInclude Include="GameObject\FlyingLog.h" />
     <ClInclude Include="GameObject\LowDynamicObj.h" />
     <ClInclude Include="GameObject\Player.h" />
+    <ClInclude Include="GameObject\side.h" />
     <ClInclude Include="GameObject\TimeBar.h" />
     <ClInclude Include="Manager\GameVariables.h" />
     <ClInclude Include="Manager\Resource.h" />

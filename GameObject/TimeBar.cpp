@@ -11,7 +11,7 @@ void TimeBar::init(float timeMax)
     float timeBarWidth = 400;
     float timerBarHeight = 80;
     
-    sf::Vector2f timerBarSize = sf::Vector2f(timeBarWidth, timerBarHeight);
+    timerBarSize = sf::Vector2f(timeBarWidth, timerBarHeight);
     rs.setSize(timerBarSize);
 
     sf::Vector2f timerPos = sf::Vector2f(1920 * 0.5f - timeBarWidth * 0.5f, 980.f);
@@ -67,7 +67,7 @@ bool TimeBar::IsEnd()
     return false;
 }
 
-void TimeBar::render(sf::RenderWindow* window)
+void TimeBar::Render(sf::RenderWindow& window)
 {
-    window->draw(rs);
+    window.draw(rs);
 }

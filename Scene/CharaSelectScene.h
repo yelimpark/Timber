@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.h"
-#include "../GameObject/charSelect.h"
+#include "../GameObject/CharSelectPointer.h"
 
 using namespace sf;
 
@@ -10,22 +10,22 @@ private:
 
 	Sprite spritePlayers[MAX_NUMBER_OF_ITEMS];
 
-	charSelect chooseChar;
+	CharSelectPointer selectPointer;
 
 public:
 	CharaSelectScene(SceneManager& sceneManager);
 
-	virtual bool Init();
+	virtual void Init();
 
 	virtual void HanddleInput(sf::Event& event);
 
 	virtual void Update(float dt);
 
-	virtual void render(sf::RenderWindow* window);
+	virtual void Render(sf::RenderWindow& window);
 
 	virtual void Start();
 
 	virtual void End();
 
-	~CharaSelectScene();
+	virtual ~CharaSelectScene();
 };

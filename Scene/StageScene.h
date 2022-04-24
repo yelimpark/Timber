@@ -6,6 +6,7 @@
 #include "../GameObject/LowDynamicObj.h"
 #include "../GameObject/TimeBar.h"
 #include "../GameObject/FlyingLog.h"
+#include "../GameObject/Branch.h"
 
 #define clouds_size 3
 #define countBranches 6
@@ -30,8 +31,7 @@ private:
 
 	FlyingLog flyingLog;
 
-	Sprite spriteBranches[countBranches];
-	side sideBranches[countBranches];
+	Branch branches[countBranches];
 
 	bool acceptInput;
 	bool isPause;
@@ -53,13 +53,13 @@ private:
 public:
 	StageScene(SceneManager& sceneManager);
 
-	virtual bool Init() override;
+	virtual void Init() override;
 
 	virtual void HanddleInput(sf::Event& event) override;
 
 	virtual void Update(float dt) override;
 
-	virtual void render(sf::RenderWindow* window) override;
+	virtual void Render(sf::RenderWindow& window) override;
 
 	virtual void Start() override;
 

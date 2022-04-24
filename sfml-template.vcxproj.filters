@@ -60,11 +60,14 @@
     <ClCompile Include="GameObject\FlyingLog.cpp">
       <Filter>소스 파일\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject\charSelect.cpp">
+    <ClCompile Include="GameObject\CharSelectPointer.cpp">
       <Filter>소스 파일\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Scene\CharaSelectScene.cpp">
       <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Branch.cpp">
+      <Filter>소스 파일\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -104,11 +107,17 @@
     <ClInclude Include="Scene\CharaSelectScene.h">
       <Filter>소스 파일\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject\charSelect.h">
+    <ClInclude Include="GameObject\CharSelectPointer.h">
       <Filter>소스 파일\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Manager\GameVariables.h">
       <Filter>소스 파일\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Branch.h">
+      <Filter>소스 파일\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\side.h">
+      <Filter>소스 파일\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

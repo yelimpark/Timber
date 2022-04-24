@@ -66,10 +66,10 @@ void Player::Dead()
 	spritePlayer.setTexture(*ResourceMgr::instance()->GetTexture("MAINRIPTEX"));
 }
 
-void Player::render(sf::RenderWindow* window)
+void Player::Render(sf::RenderWindow& window)
 {
-	window->draw(spritePlayer);
-	window->draw(spriteAxe);
+	window.draw(spritePlayer);
+	window.draw(spriteAxe);
 }
 
 Player::~Player()

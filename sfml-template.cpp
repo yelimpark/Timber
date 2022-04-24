@@ -4,10 +4,8 @@
 int main()
 {
     GameFramework gameFramework;
-    if (!gameFramework.Init()) {
-        std::cout << "Initialize Failed." << std::endl;
-        return -1;
-    }
+
+    gameFramework.Init();
 
     return gameFramework.Run();
 }
