@@ -43,6 +43,7 @@ void CharaSelectScene::HanddleInput(sf::Event& event)
         {
         case Keyboard::Return:
             sceneManager.GetGameVariables().selectedCharaIndex1p = selectPointers[0].GetPressedItem();
+            sceneManager.GetGameVariables().selectedCharaIndex2p = selectPointers[1].GetPressedItem();
             sceneManager.ChangeScene(SceneType::STAGE);
             break;
 
@@ -52,11 +53,6 @@ void CharaSelectScene::HanddleInput(sf::Event& event)
 
         case Keyboard::Right:
             selectPointers[0].MoveRight();
-            break;
-
-        case Keyboard::Space:
-            sceneManager.GetGameVariables().selectedCharaIndex1p = selectPointers[1].GetPressedItem();
-            sceneManager.ChangeScene(SceneType::STAGE);
             break;
 
         case Keyboard::A:
