@@ -1,11 +1,11 @@
 #pragma once
 #include <SFML/Audio.hpp>
-#include "Scene/Scene.h"
+#include "Scene.h"
 
-#include "MultiPlayer.h"
-#include "GameObject/LowDynamicObj.h"
-#include "GameObject/TimeBar.h"
-#include "GameObject/FlyingLog.h"
+#include "../GameObject/MultiPlayer.h"
+#include "../GameObject/LowDynamicObj.h"
+#include "../GameObject/TimeBar.h"
+#include "../GameObject/FlyingLog.h"
 
 #define clouds_size 3
 #define countBranches 6
@@ -29,8 +29,8 @@ private:
 	FlyingLog flyingLog2P;
 	Sprite spriteBranches1P[countBranches];
 	Sprite spriteBranches2P[countBranches];
-	side1 sideBranches1P[countBranches];
-	side2 sideBranches2P[countBranches];
+	sideMulti sideBranches1P[countBranches];
+	sideMulti sideBranches2P[countBranches];
 
 	bool acceptInput1P;
 	bool acceptInput2P;

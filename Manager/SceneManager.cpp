@@ -1,7 +1,7 @@
 #include "SceneManager.h"
 #include "../Scene/StageScene.h"
 #include "../Scene/CharaSelectScene.h"
-#include "../MultiPlayScene.h"
+#include "../Scene/MultiPlayScene.h"
 
 GameVariables& SceneManager::GetGameVariables()
 {

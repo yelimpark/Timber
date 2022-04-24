@@ -3,14 +3,7 @@
 
 using namespace sf;
 
-enum class side1
-{
-    LEFT,
-    RIGHT,
-    NONE,
-};
-
-enum class side2
+enum class sideMulti
 {
     LEFT,
     RIGHT,
@@ -31,20 +24,19 @@ enum class AXE2P_POSITION
 
 class MultiPlayer {
 private:
-    side1 p1_side;
-    side2 p2_side;
+    sideMulti p_side;
     Sprite spritePlayer1;
     Sprite spritePlayer2;
     Sprite spriteAxe1P;
     Sprite spriteAxe2P;
+    Keyboard::Key LeftMoveKey;
 
 public:
     MultiPlayer();
 
-    side1 getSide1P();
-    side2 getSide2P();
+    sideMulti getSide();
     void init(int playerTextureInex);
-    void HanddleInput(sf::Keyboard::Key key);
+    void HanddleInput(Keyboard::Key key);
     void AtKeyReleased();
     void Update();
     void Dead();

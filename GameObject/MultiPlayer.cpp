@@ -1,23 +1,18 @@
 #include "MultiPlayer.h"
 #include <sstream>
-#include "Manager/ResourceMgr.h"
+#include "../Manager/ResourceMgr.h"
 
 using namespace std;
 
 MultiPlayer::MultiPlayer()
-	:p1_side(side1::LEFT), p2_side(side2::LEFT)
+	:p_side(sideMulti::LEFT)
 {
 
 }
 
-side1 MultiPlayer::getSide1P()
+sideMulti MultiPlayer::getSide()
 {
-	return p1_side;
-}
-
-side2 MultiPlayer::getSide2P()
-{
-	return p2_side;
+	return p_side;
 }
 
 void MultiPlayer::init(int playerTextureInex)
@@ -30,8 +25,7 @@ void MultiPlayer::init(int playerTextureInex)
 	spritePlayer2.setTexture(*ResourceMgr::instance()->GetTexture(ss2.str()));
 	spritePlayer1.setPosition(Vector2f(1920.f * 0.3f * 0.4f, 720.f));
 	spritePlayer2.setPosition(Vector2f(1920.f * 0.3f * 2.1f, 720.f));
-	p1_side = side1::LEFT;
-	p2_side = side2::LEFT;
+	p_side = sideMulti::LEFT;
 
 	spriteAxe1P.setTexture(*ResourceMgr::instance()->GetTexture("MAINAXETEX"));
 	spriteAxe2P.setTexture(*ResourceMgr::instance()->GetTexture("MAINAXETEX"));
@@ -48,21 +42,21 @@ void MultiPlayer::HanddleInput(sf::Keyboard::Key key)
 		spritePlayer2.setPosition(Vector2f(1920.f * 0.3f * 2.1f, 720.f));
 		break;
 	case Keyboard::A:
-		p1_side = side1::LEFT;
+		p_side = sideMulti::LEFT;
 		spritePlayer1.setPosition(Vector2f(1920.f * 0.3f, 720.f));
 		spriteAxe1P.setPosition((float)AXE1P_POSITION::LEFT, spriteAxe1P.getPosition().y);
 		break;
 	case Keyboard::D:
-		p1_side = side1::RIGHT;
+		p_side = sideMulti::RIGHT;
 		spritePlayer1.setPosition(Vector2f(1920.f * 0.3f * 0.4f, 720.f));
 		spriteAxe1P.setPosition((float)AXE2P_POSITION::RIGHT, spriteAxe1P.getPosition().y);
 		break;
 	case Keyboard::Left:
-		p2_side = side2::LEFT;
+		p_side = sideMulti::LEFT;
 		spritePlayer2.setPosition(Vector2f(1920.f * 0.3f * 2.1f, 720.f));
 		spriteAxe2P.setPosition((float)AXE2P_POSITION::LEFT, spriteAxe2P.getPosition().y);
 	case Keyboard::Right:
-		p2_side = side2::RIGHT;
+		p_side = sideMulti::RIGHT;
 		spritePlayer2.setPosition(Vector2f(1920.f * 0.3f * 2.1f, 720.f));
 		spriteAxe2P.setPosition((float)AXE2P_POSITION::RIGHT, spriteAxe2P.getPosition().y);
 	}

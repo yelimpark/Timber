@@ -152,14 +152,14 @@
     <ClCompile Include="GameObject\charSelect.cpp" />
     <ClCompile Include="GameObject\FlyingLog.cpp" />
     <ClCompile Include="GameObject\LowDynamicObj.cpp" />
+    <ClCompile Include="GameObject\MultiPlayer.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />
     <ClCompile Include="GameObject\TimeBar.cpp" />
     <ClCompile Include="Manager\Resource.cpp" />
     <ClCompile Include="Manager\ResourceMgr.cpp" />
     <ClCompile Include="Manager\SceneManager.cpp" />
-    <ClCompile Include="MultiPlayer.cpp" />
-    <ClCompile Include="MultiPlayScene.cpp" />
     <ClCompile Include="Scene\CharaSelectScene.cpp" />
+    <ClCompile Include="Scene\MultiPlayScene.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\StageScene.cpp" />
     <ClCompile Include="sfml-template.cpp" />
@@ -169,6 +169,7 @@
     <ClInclude Include="GameObject\charSelect.h" />
     <ClInclude Include="GameObject\FlyingLog.h" />
     <ClInclude Include="GameObject\LowDynamicObj.h" />
+    <ClInclude Include="GameObject\MultiPlayer.h" />
     <ClInclude Include="GameObject\Player.h" />
     <ClInclude Include="GameObject\TimeBar.h" />
     <ClInclude Include="Manager\GameVariables.h" />
@@ -176,9 +177,8 @@
     <ClInclude Include="Manager\ResourceMgr.h" />
     <ClInclude Include="Manager\SceneManager.h" />
     <ClInclude Include="Manager\Singleton.h" />
-    <ClInclude Include="MultiPlayer.h" />
-    <ClInclude Include="MultiPlayScene.h" />
     <ClInclude Include="Scene\CharaSelectScene.h" />
+    <ClInclude Include="Scene\MultiPlayScene.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\StageScene.h" />
   </ItemGroup>

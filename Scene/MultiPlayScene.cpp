@@ -1,6 +1,6 @@
 #include"MultiPlayScene.h"
 #include <sstream>
-#include"Manager/ResourceMgr.h"\
+#include"../Manager/ResourceMgr.h"\
 
 using namespace sf;
 using namespace std;
@@ -59,7 +59,7 @@ bool MultiPlayScene::Init()
         spriteBranches1P[i].setPosition(-2000, -2000);
         spriteBranches1P[i].setOrigin(220, 40);
 
-        sideBranches1P[i] = side1::NONE;
+        sideBranches1P[i] = sideMulti::NONE;
     }
 
     acceptInput1P = false;
@@ -88,11 +88,11 @@ void MultiPlayScene::HanddleInput(sf::Event& event)
 
             for (int i = 0; i < countBranches; ++i)
             {
-                sideBranches1P[i] = side1::NONE;
+                sideBranches1P[i] = sideMulti::NONE;
             }
             for (int i = 0; i < countBranches; ++i)
             {
-                sideBranches2P[i] = side2::NONE;
+                sideBranches2P[i] = sideMulti::NONE;
             }
             player1.HanddleInput(event.key.code);
             player2.HanddleInput(event.key.code);
@@ -114,13 +114,13 @@ void MultiPlayScene::HanddleInput(sf::Event& event)
                 switch (rnd)
                 {
                 case 0:
-                    sideBranches1P[0] = side1::LEFT;
+                    sideBranches1P[0] = sideMulti::LEFT;
                     break;
                 case 1:
-                    sideBranches1P[0] = side1::RIGHT;
+                    sideBranches1P[0] = sideMulti::RIGHT;
                     break;
                 default:
-                    sideBranches1P[0] = side1::NONE;
+                    sideBranches1P[0] = sideMulti::NONE;
                     break;
                 }
                 acceptInput1P = false;
@@ -142,13 +142,13 @@ void MultiPlayScene::HanddleInput(sf::Event& event)
                 switch (rnd)
                 {
                 case 0:
-                    sideBranches2P[0] = side2::LEFT;
+                    sideBranches2P[0] = sideMulti::LEFT;
                     break;
                 case 1:
-                    sideBranches2P[0] = side2::RIGHT;
+                    sideBranches2P[0] = sideMulti::RIGHT;
                     break;
                 default:
-                    sideBranches2P[0] = side2::NONE;
+                    sideBranches2P[0] = sideMulti::NONE;
                     break;
                 }
                 acceptInput2P = false;
@@ -192,11 +192,11 @@ void MultiPlayScene::Update(float dt)
             float height = 150 * i;
             switch (sideBranches1P[i])
             {
-            case side1::LEFT:
+            case sideMulti::LEFT:
                 spriteBranches1P[i].setPosition(Vector2f(1920.f * 0.08f, height));
                 spriteBranches1P[i].setRotation(180);
                 break;
-            case side1::RIGHT:
+            case sideMulti::RIGHT:
                 spriteBranches1P[i].setPosition(Vector2f(1920.f * 0.42f, height));
                 spriteBranches1P[i].setRotation(0);
                 break;
@@ -211,11 +211,11 @@ void MultiPlayScene::Update(float dt)
             float height = 150 * i;
             switch (sideBranches2P[i])
             {
-            case side2::LEFT:
+            case sideMulti::LEFT:
                 spriteBranches2P[i].setPosition(Vector2f(1920.f * 0.58f, height));
                 spriteBranches2P[i].setRotation(180);
                 break;
-            case side2::RIGHT:
+            case sideMulti::RIGHT:
                 spriteBranches2P[i].setPosition(Vector2f(1920.f * 0.92f, height));
                 spriteBranches2P[i].setRotation(0);
                 break;
@@ -247,7 +247,7 @@ void MultiPlayScene::Update(float dt)
         flyingLog1P.Update(dt);
         flyingLog2P.Update(dt);
 
-        if (sideBranches1P[countBranches - 1] == player1.getSide1P()&&isDead1P)
+        if (sideBranches1P[countBranches - 1] == player1.getSide()&&isDead1P)
         {
             isPause = true;
             acceptInput1P = false;
@@ -264,7 +264,7 @@ void MultiPlayScene::Update(float dt)
             isDead1P = true;
         }
 
-        if (sideBranches2P[countBranches - 1] == player2.getSide2P() && !isDead2P)
+        if (sideBranches2P[countBranches - 1] == player2.getSide() && !isDead2P)
         {
             isPause = true;
             acceptInput2P = false;
