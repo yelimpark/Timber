@@ -160,7 +160,11 @@
     <ClCompile Include="Manager\SceneManager.cpp" />
     <ClCompile Include="Manager\SoundManager.cpp" />
     <ClCompile Include="Scene\CharaSelectScene.cpp" />
+    <ClCompile Include="Scene\LevelScene.cpp" />
+    <ClCompile Include="Scene\MenuScene.cpp" />
+    <ClCompile Include="Scene\PlayerSelectScene.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Scene\SetupScene.cpp" />
     <ClCompile Include="Scene\StageScene.cpp" />
     <ClCompile Include="sfml-template.cpp" />
   </ItemGroup>
@@ -180,7 +184,11 @@
     <ClInclude Include="Manager\Singleton.h" />
     <ClInclude Include="Manager\SoundManager.h" />
     <ClInclude Include="Scene\CharaSelectScene.h" />
+    <ClInclude Include="Scene\LevelScene.h" />
+    <ClInclude Include="Scene\MenuScene.h" />
+    <ClInclude Include="Scene\PlayerSelectScene.h" />
     <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SetupScene.h" />
     <ClInclude Include="Scene\StageScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

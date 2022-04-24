@@ -3,7 +3,8 @@
 
 enum class GAME_MOD {
 	SINGLE = 1,
-	MULTI = 2
+	MULTI = 2,
+	
 };
 
 class GameVariables : public Singleton<GameVariables> {

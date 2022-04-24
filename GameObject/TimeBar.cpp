@@ -1,4 +1,5 @@
 #include "TimeBar.h"
+#include "../Scene/LevelScene.h"
 
 TimeBar::TimeBar()
     :timerBarWidthPerSecond(0.f), timeMax(0.f), timeRemaining(timeMax)

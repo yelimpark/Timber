@@ -1,23 +1,25 @@
 #pragma once
 #include "Scene.h"
-#include "../GameObject/CharSelectPointer.h"
 
 using namespace sf;
 
-class CharaSelectScene : public Scene {
+class MenuScene :public Scene {
 private:
 	Sprite spriteBackground;
 
-	Sprite spritePlayers[MAX_NUMBER_OF_ITEMS];
-
-	CharSelectPointer selectPointers[2];
-
 	Text textMain;
 
-	int selectPointerCount;
+	Text textMenu;
+
+	Text textOp1;
+
+	Text textOp2;
+
+	Text textGuide;
+
 
 public:
-	CharaSelectScene(SceneManager& sceneManager);
+	MenuScene(SceneManager& sceneManager);
 
 	virtual void Init();
 
@@ -31,5 +33,7 @@ public:
 
 	virtual void End();
 
-	virtual ~CharaSelectScene();
+	virtual ~MenuScene();
+
 };
+
