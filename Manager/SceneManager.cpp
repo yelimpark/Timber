@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "../Scene/StageScene.h"
 #include "../Scene/CharaSelectScene.h"
+#include "../MultiPlayScene.h"
 
 GameVariables& SceneManager::GetGameVariables()
 {
@@ -16,6 +17,7 @@ void SceneManager::Init()
 {
 	scenes[(int)SceneType::CHARA] = new CharaSelectScene(*this);
 	scenes[(int)SceneType::STAGE] = new StageScene(*this);
+	scenes[(int)SceneType::MULTIPLAY] = new MultiPlayScene(*this);
 
 	scenes[0]->Init();
 }

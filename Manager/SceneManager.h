@@ -5,6 +5,7 @@
 enum class SceneType {
 	CHARA,
 	STAGE, 
+	MULTIPLAY,
 	MAX
 };
 
