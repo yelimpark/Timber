@@ -25,17 +25,18 @@ enum class AXE2P_POSITION
 class MultiPlayer {
 private:
     sideMulti p_side;
-    Sprite spritePlayer1;
-    Sprite spritePlayer2;
-    Sprite spriteAxe1P;
-    Sprite spriteAxe2P;
+    Sprite spritePlayer;
+    Sprite spriteAxe;
     Keyboard::Key LeftMoveKey;
+    Keyboard::Key RightMoveKey;
+    Vector2f position;
+    Vector2f originalPos;
 
 public:
     MultiPlayer();
 
     sideMulti getSide();
-    void init(int playerTextureInex);
+    void init(int playerTextureInex, int x, int y, Keyboard::Key left, Keyboard::Key right);
     void HanddleInput(Keyboard::Key key);
     void AtKeyReleased();
     void Update();
