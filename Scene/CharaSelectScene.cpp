@@ -11,6 +11,12 @@ CharaSelectScene::CharaSelectScene(SceneManager& sceneManager)
 
 void CharaSelectScene::Init()
 {    
+    textMain.setFont(*ResourceMgr::instance()->GetFont("MAINFONT"));
+    textMain.setString("Character select");
+    textMain.setCharacterSize(100);
+    textMain.setFillColor(Color::White);
+    textMain.setPosition(450, 210);
+
     selectPointers[0].Init(1920, 1080, Color::Yellow);
 
     if (GameVariables::Mode == GAME_MOD::MULTI) {
@@ -86,6 +92,7 @@ void CharaSelectScene::Render(sf::RenderWindow& window)
     for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++) {
         window.draw(spritePlayers[i]);
     }
+    window.draw(textMain);
 }
 
 void CharaSelectScene::Start()

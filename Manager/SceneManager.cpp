@@ -1,15 +1,23 @@
 #include "SceneManager.h"
 #include "../Scene/StageScene.h"
 #include "../Scene/CharaSelectScene.h"
+#include "../Scene/MenuScene.h"
+#include "../Scene/SetupScene.h"
+#include "../Scene/LevelScene.h"
+#include "../Scene/PlayerSelectScene.h"
 
 SceneManager::SceneManager()
-	:currScene(SceneType::CHARA)
+	:currScene(SceneType::MENU)
 {
 	memset(scenes, NULL, sizeof(scenes));
 }
 
 void SceneManager::Init()
 {
+	scenes[(int)SceneType::MENU] = new MenuScene(*this);
+	scenes[(int)SceneType::SETUP] = new SetupScene(*this);
+	scenes[(int)SceneType::LEVEL] = new LevelScene(*this);
+	scenes[(int)SceneType::PLAYER] = new PlayerSelectScene(*this);
 	scenes[(int)SceneType::CHARA] = new CharaSelectScene(*this);
 	scenes[(int)SceneType::STAGE] = new StageScene(*this);
 

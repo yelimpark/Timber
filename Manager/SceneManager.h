@@ -3,6 +3,10 @@
 #include "GameVariables.h"
 
 enum class SceneType {
+	MENU,
+	SETUP,
+	LEVEL,
+	PLAYER,
 	CHARA,
 	STAGE, 
 	MAX
