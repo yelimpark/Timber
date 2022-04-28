@@ -8,7 +8,7 @@ enum class GAME_MOD {
 
 class GameVariables : public Singleton<GameVariables> {
 public:
-	GAME_MOD Mode = GAME_MOD::MULTI;
-	int selectedCharaIndex1p = 0;
-	int selectedCharaIndex2p = 0;
+	static GAME_MOD Mode;
+	static int selectedCharaIndex1p;
+	static int selectedCharaIndex2p;
 };

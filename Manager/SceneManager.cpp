@@ -2,11 +2,6 @@
 #include "../Scene/StageScene.h"
 #include "../Scene/CharaSelectScene.h"
 
-GameVariables& SceneManager::GetGameVariables()
-{
-	return gameVal;
-}
-
 SceneManager::SceneManager()
 	:currScene(SceneType::CHARA)
 {

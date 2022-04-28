@@ -19,7 +19,6 @@ private:
 	GameVariables gameVal;
 
 public:
-	GameVariables& GetGameVariables();
 
 	SceneManager();
 

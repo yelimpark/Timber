@@ -13,7 +13,7 @@ void CharaSelectScene::Init()
 {    
     selectPointers[0].Init(1920, 1080, Color::Yellow);
 
-    if (sceneManager.GetGameVariables().Mode == GAME_MOD::MULTI) {
+    if (GameVariables::Mode == GAME_MOD::MULTI) {
         selectPointers[1].Init(1920, 1080, Color::Magenta);
     }
   
@@ -42,8 +42,8 @@ void CharaSelectScene::HanddleInput(sf::Event& event)
         switch (event.key.code)
         {
         case Keyboard::Return:
-            sceneManager.GetGameVariables().selectedCharaIndex1p = selectPointers[0].GetPressedItem();
-            sceneManager.GetGameVariables().selectedCharaIndex2p = selectPointers[1].GetPressedItem();
+            GameVariables::selectedCharaIndex1p = selectPointers[0].GetPressedItem();
+            GameVariables::selectedCharaIndex2p = selectPointers[1].GetPressedItem();
             sceneManager.ChangeScene(SceneType::STAGE);
             break;
 
@@ -77,7 +77,7 @@ void CharaSelectScene::Render(sf::RenderWindow& window)
 {
     window.draw(spriteBackground);
 
-    if (sceneManager.GetGameVariables().Mode == GAME_MOD::MULTI) {
+    if (GameVariables::Mode == GAME_MOD::MULTI) {
         selectPointers[1].draw(window);
     }
 

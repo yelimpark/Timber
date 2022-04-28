@@ -13,7 +13,7 @@ StageScene::StageScene(SceneManager& sceneManager)
 
 void StageScene::Init()
 {
-    player.init(sceneManager.GetGameVariables().selectedCharaIndex1p);
+    player.init(GameVariables::selectedCharaIndex1p);
 
     for (int i = 0; i < clouds_size; i++) {
         clouds[i].init(*ResourceMgr::instance()->GetTexture("MAINCLOUDTEX"));
