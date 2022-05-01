@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "../GameObject/CharSelectPointer.h"
 using namespace sf;
 
 class LevelScene :public Scene {

@@ -43,6 +43,7 @@ void PlayerSelectScene::HanddleInput(sf::Event& event)
 		{
 		case Keyboard::Num1:
 			sceneManager.ChangeScene(SceneType::CHARA);
+			// 데이터 저장후 화면 넘어가야함
 			break;
 		case Keyboard::Num2:
 			sceneManager.ChangeScene(SceneType::CHARA);

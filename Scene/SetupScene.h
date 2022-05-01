@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "../Manager/SoundManager.h"
 #include <SFML/Audio.hpp>
 
 
@@ -8,6 +9,8 @@ using namespace sf;
 class SetupScene:public Scene {
 private:
 	Sprite spriteBackground;
+
+	Font font;
 
 	Text textMain;
 

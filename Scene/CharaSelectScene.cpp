@@ -4,6 +4,12 @@
 
 using namespace std;
 
+int GameVariables::selectedCharaIndex1p;
+int GameVariables::selectedCharaIndex2p;
+static GAME_MOD Mode;
+
+
+
 CharaSelectScene::CharaSelectScene(SceneManager& sceneManager)
     :Scene(sceneManager), selectPointerCount(0)
 {

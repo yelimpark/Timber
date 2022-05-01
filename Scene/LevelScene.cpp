@@ -1,6 +1,9 @@
 #include "LevelScene.h"
 #include "../Manager/ResourceMgr.h"
 #include <sstream>
+#include "../Manager/GameVariables.h"
+
+
 
 LevelScene::LevelScene(SceneManager& sceneManager) :Scene(sceneManager)
 {
@@ -46,6 +49,7 @@ void LevelScene::HanddleInput(sf::Event& event)
 		{
 		case Keyboard::Num1:
 			sceneManager.ChangeScene(SceneType::PLAYER);
+			
 			break;
 		case Keyboard::Num2:
 			sceneManager.ChangeScene(SceneType::PLAYER);
