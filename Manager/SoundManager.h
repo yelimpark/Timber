@@ -16,4 +16,6 @@ public:
 
 	void PlaySound(std::string id);
 
+	void StopSound();
+
 };

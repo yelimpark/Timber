@@ -1,7 +1,7 @@
 #include "LevelScene.h"
 #include "../Manager/ResourceMgr.h"
+#include "../GameObject/TimeBar.h"
 #include <sstream>
-#include "../Manager/GameVariables.h"
 
 
 
@@ -48,14 +48,17 @@ void LevelScene::HanddleInput(sf::Event& event)
 		switch (event.key.code)
 		{
 		case Keyboard::Num1:
-			sceneManager.ChangeScene(SceneType::PLAYER);
+			timebar.Update(0.5f);
+			sceneManager.ChangeScene(SceneType::CHARA);
 			
 			break;
 		case Keyboard::Num2:
-			sceneManager.ChangeScene(SceneType::PLAYER);
+			
+			sceneManager.ChangeScene(SceneType::CHARA);
 			break;
 		case Keyboard::Num3:
-			sceneManager.ChangeScene(SceneType::PLAYER);
+			timebar.Update(5.f);
+			sceneManager.ChangeScene(SceneType::CHARA);
 			break;
 
 		default:

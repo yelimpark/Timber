@@ -6,7 +6,6 @@
 using namespace std;
 using namespace sf;
 
-
 SetupScene::SetupScene(SceneManager& sceneManager) :Scene(sceneManager)
 {
 
@@ -37,16 +36,10 @@ void SetupScene::Init()
 	textOp2.setFillColor(Color::White);
 	textOp2.setPosition(450, 650);
 
-	
 }
 
 void SetupScene::HanddleInput(sf::Event& event)
 {
-	
-	sf::Time delayTime = sf::milliseconds(0.5);
-	sf::Clock clock;
-	
-	FloatRect textRect = textOn.getLocalBounds();
 
 	switch (event.type)
 	{
@@ -55,34 +48,12 @@ void SetupScene::HanddleInput(sf::Event& event)
 		switch (event.key.code)
 		{
 		case Keyboard::Num1:
-			textOn.setFont(font);
-			textOn.setString("Turn On the Sound");
-			textOn.setCharacterSize(150);
-			textOn.setOrigin(
-				textRect.left + textRect.width * 0.5f,
-				textRect.top + textRect.height * 0.5f
-			);
-			sf::sleep(delayTime);
+			return;
 			break;
 		case Keyboard::Num2:
-			// stop playback and rewind
-			//sound.stop();
-			sf::Sound sound;
-			sound.stop();
-
-			textOff.setFont(font);
-			textOff.setString("Turn Off the Sound");
-			textOff.setCharacterSize(150);
-			textOff.setOrigin(
-				textRect.left + textRect.width * 0.5f,
-				textRect.top + textRect.height * 0.5f
-			);
-			sf::sleep(delayTime);
+			sound.StopSound();
 			break;
-
-		
 		}
-
 		break;
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Backspace))
@@ -104,8 +75,6 @@ void SetupScene::Render(sf::RenderWindow& window)
 	window.draw(textOp1);
 	window.draw(textOp2);
 	
-	window.draw(textOn);
-	window.draw(textOff);
 }
 
 void SetupScene::Start()

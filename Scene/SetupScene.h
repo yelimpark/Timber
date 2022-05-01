@@ -18,9 +18,7 @@ private:
 
 	Text textOp2;
 
-	Text textOn;
-
-	Text textOff;
+	SoundManager sound;
 
 public:
 	SetupScene(SceneManager& sceneManager);

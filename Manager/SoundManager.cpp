@@ -11,3 +11,9 @@ void SoundManager::Init()
 void SoundManager::PlaySound(std::string id)
 {
 }
+
+void SoundManager::StopSound()
+{
+	Sound soundSetup;
+	soundSetup.stop();
+}

@@ -2,11 +2,11 @@
 #include <SFML/Graphics.hpp>
 #include "GameVariables.h"
 
+
 enum class SceneType {
 	MENU,
 	SETUP,
 	LEVEL,
-	PLAYER,
 	CHARA,
 	STAGE, 
 	MAX
@@ -21,8 +21,8 @@ private:
 	Scene* scenes[(int)SceneType::MAX];
 
 	GameVariables gameVal;
-
 public:
+	GameVariables& GetGameVariables();
 
 	SceneManager();
 

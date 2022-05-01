@@ -1,4 +1,6 @@
 #include "CharSelectPointer.h"
+#include "../Manager/ResourceMgr.h"
+#include <sstream>
 
 CharSelectPointer::CharSelectPointer()
 	:selectedItemIndex(0)

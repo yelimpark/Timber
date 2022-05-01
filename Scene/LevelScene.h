@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "../GameObject/TimeBar.h"
 #include "../GameObject/CharSelectPointer.h"
 using namespace sf;
 
@@ -11,6 +12,9 @@ private:
 	Text textLevel1;
 	Text textLevel2;
 	Text textLevel3;
+
+	TimeBar timebar;
+
 public:
 	LevelScene(SceneManager& sceneManager);
 

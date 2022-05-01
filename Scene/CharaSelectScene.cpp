@@ -1,12 +1,9 @@
 #include "CharaSelectScene.h"
+#include "Scene.h"
 #include "../Manager/ResourceMgr.h"
 #include <sstream>
 
 using namespace std;
-
-int GameVariables::selectedCharaIndex1p;
-int GameVariables::selectedCharaIndex2p;
-static GAME_MOD Mode;
 
 
 
@@ -17,6 +14,7 @@ CharaSelectScene::CharaSelectScene(SceneManager& sceneManager)
 
 void CharaSelectScene::Init()
 {    
+
     textMain.setFont(*ResourceMgr::instance()->GetFont("MAINFONT"));
     textMain.setString("Character select");
     textMain.setCharacterSize(100);
@@ -24,11 +22,8 @@ void CharaSelectScene::Init()
     textMain.setPosition(450, 210);
 
     selectPointers[0].Init(1920, 1080, Color::Yellow);
-
-    if (GameVariables::Mode == GAME_MOD::MULTI) {
-        selectPointers[1].Init(1920, 1080, Color::Magenta);
-    }
-  
+    selectPointers[1].Init(1920, 1080, Color::Magenta);
+    
 	spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("MAINBGTEX"));
 	spriteBackground.setPosition(0, 0);
 
@@ -54,11 +49,11 @@ void CharaSelectScene::HanddleInput(sf::Event& event)
         switch (event.key.code)
         {
         case Keyboard::Return:
-            GameVariables::selectedCharaIndex1p = selectPointers[0].GetPressedItem();
-            GameVariables::selectedCharaIndex2p = selectPointers[1].GetPressedItem();
+            sceneManager.GetGameVariables().selectedCharaIndex = selectPointers[0].GetPressedItem();
+           /*GameVariables::selectedCharaIndex1p = selectPointers[0].GetPressedItem();*/
+            selectPointers[1].GetPressedItem();
             sceneManager.ChangeScene(SceneType::STAGE);
             break;
-
         case Keyboard::Left:
             selectPointers[0].MoveLeft();
             break;
@@ -89,10 +84,8 @@ void CharaSelectScene::Render(sf::RenderWindow& window)
 {
     window.draw(spriteBackground);
 
-    if (GameVariables::Mode == GAME_MOD::MULTI) {
-        selectPointers[1].draw(window);
-    }
-
+   
+    selectPointers[1].draw(window);
     selectPointers[0].draw(window);
 
     for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++) {
